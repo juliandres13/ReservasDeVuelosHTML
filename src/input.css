@@ -1,0 +1,111 @@
+@import "../node_modules/tabulator-tables/dist/css/tabulator.min.css";
+@import "./toast.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html {
+        font-family: "Montserrat", sans-serif;
+    }
+
+    h1 {
+        font-size: xx-large;
+    }
+
+    h2 {
+        font-size: x-large;
+    }
+
+    h3 {
+        font-size: larger;
+    }
+
+    h5 {
+        font-size: smaller;
+    }
+
+    h6 {
+        font-size: x-small;
+    }
+}
+@layer components {
+
+    li > a {
+        @apply text-black py-0.5 pl-12 hover:underline hover:text-orange-500 visited:text-purple-800;
+    }
+
+    nav > .color-a {
+        @apply hover:bg-white bg-gray-200 flex justify-center text-black text-xl py-2.5 tracking-wider border-solid border-x border-y border-transparent hover:border-black transition-colors duration-500;
+    }
+
+    nav > .color-b {
+        @apply hover:bg-white bg-orange-2 flex justify-center text-black text-xl py-2.5 tracking-wider border-solid border-x border-y border-transparent hover:border-black transition-colors duration-500;
+    }
+
+    .nav > a {
+        @apply uppercase text-black px-2.5 tracking-widest text-medium transition-colors duration-500;
+    }
+
+    .icons > a {
+        @apply uppercase text-black tracking-widest py-2.5 text-sm transition-colors duration-500;
+    }
+
+    .navegacion > .laptop > i {
+        @apply text-lg pl-4 tracking-widest cursor-pointer transition-colors duration-500;
+    }
+
+    .desktop > a, .desktop > i {
+        @apply uppercase tracking-widest text-black transition-colors duration-500;
+    }
+
+    .section-f i {
+        @apply text-2xl px-1 hover:text-gray-400 transition-colors duration-300;
+    }
+
+    section > li {
+        @apply bg-white grid border border-gray-500 shadow-lg shadow-gray-500 py-5 px-2.5 rounded-md h-full;
+    }
+
+    article {
+        @apply bg-white rounded-xl pb-4 border border-gray-500 shadow-lg shadow-gray-500 h-fit;
+    }
+
+    article img {
+        @apply rounded-xl w-full m-0;
+    }
+
+    .functions {
+        @apply bg-white-1 grid gap-5 media-600:grid-cols-2 media-1080:grid-cols-4;
+    }
+
+    .functions article {
+        @apply p-5;
+    }
+
+    hgroup > h2, hgroup > h3 {
+        @apply p-2.5 -mt-14 mb-14 h-1/2;
+    }
+
+    article a {
+        @apply bg-orange-2 text-black py-1 px-2.5 block text-center rounded-md m-left-45% border border-black hover:bg-black hover:border-orange-500 hover:text-white transition-colors duration-500;
+    }
+
+    section > article a {
+        @apply -mt-14;
+    }
+
+    .functions > article a {
+        @apply m-0 w-1/3 py-0.5 float-right mt-4;
+    }
+
+    main > section {
+        @apply bg-white-1 grid gap-5 media-600:grid-cols-2 media-1080:grid-cols-4;
+    }
+
+    .see-all a {
+        @apply underline text-black hover:text-orange-400;
+    }
+
+}

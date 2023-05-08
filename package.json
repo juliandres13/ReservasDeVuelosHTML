@@ -1,0 +1,21 @@
+{
+  "name": "reservasdevueloshtml",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx tailwindcss -i ./src/input.css -o ./resources/css/styles.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "daisyui": "^2.51.6",
+    "luxon": "^3.3.0",
+    "tabulator-tables": "^5.4.4"
+  },
+  "devDependencies": {
+    "prettier-plugin-tailwindcss": "^0.2.7",
+    "tailwindcss": "^3.3.2"
+  }
+}
