@@ -100,8 +100,8 @@ export default class Helpers {
         usuario: /^[a-zA-Z0-9\_\-]{4,16}$/, // Letras, numeros, guion y guion_bajo
         nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
         password: /^.{3,12}$/, // 3 a 12 digitos.
-        other: /^[a-zA-Z0-9\s]{4,16}$/
-
+        other: /^[a-zA-Z0-9\s]{4,16}$/,
+        duration: /PT\d{1,2}H\d{2}M/
     }
 
     static campos = {

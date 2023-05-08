@@ -30,8 +30,8 @@ export default class Trayectos {
                     let value = cell.getValue()
                     return Duration.fromISO(value).toFormat(outputFormat)
                 }},
-                { formatter: Trayectos.#editRowButton, width: 40, hozAlign: "center" },
-                { formatter: Trayectos.#deleteRowButton, width: 40, hozAlign: "center" }
+                { formatter: this.#editRowButton, width: 40, hozAlign: "center" },
+                { formatter: this.#deleteRowButton, width: 40, hozAlign: "center" }
             ],
             footerElement: `
                 <div class='flex justify-end w-full'>
@@ -46,16 +46,59 @@ export default class Trayectos {
     static #editRowButton = () => `<button class="text-green-600" title="Editar">${Icons.edit}</button>`
     static #deleteRowButton = () => `<button class="text-red-600" title="Eliminar">${Icons.delete}</button>`
 
-    static #addTrayecto = () => {
+    static async #addTrayecto() {
         let modalAddTrayecto = new Modal({
             title: "Añadir Trayecto",
-            content: Helpers.loadPage('./resources/html/formCreateTrayectos.html').innerHTML,
+            content: `${await Helpers.loadPage('./resources/html/form-create-trayectos.html')}`,
             buttons: [
                 {
-
+                    id: "add-path",
+                    style: "btn btn-outline btn-accent",
+                    html: `${Icons.confirm}<span>Crear Trayecto</span>`,
+                    callBack: async () => {
+                        if (Helpers.expresiones.nombre.test(document.getElementById('origen').value) &&
+                        Helpers.expresiones.nombre.test(document.getElementById('destino').value) &&
+                        Helpers.expresiones.duration.test(document.getElementById('duracion').value)) {
+                            try {
+                                let response = await Helpers.fetchData(`${localStorage.getItem("url")}/trayectos`, {
+                                    method: 'POST',
+                                    body: {
+                                        origen: document.getElementById('origen').value,
+                                        destino: document.getElementById('destino').value,
+                                        costo: document.getElementById('costo').value,
+                                        duracion: document.getElementById('duracion').value
+                                    }
+                                })
+                                if (response.message == 'ok') {
+                                    Helpers.showToast({
+                                        icon: `${Icons.check}`,
+                                        message: "Trayecto añadido exitosamente!",
+                                    }) 
+                                    Trayectos.#table.addRow({
+                                        origen: document.getElementById('origen').value,
+                                        destino: document.getElementById('destino').value,
+                                        costo: document.getElementById('costo').value,
+                                        duracion: document.getElementById('duracion').value
+                                    }, true);
+                                    modalAddTrayecto.dispose()
+                                } else {
+                                    Helpers.showToast({
+                                        icon: `${Icons.alert}`,
+                                        message: `${response.message}`,
+                                    }) 
+                                }
+                            } catch (error) {
+                                console.log(error);
+                            }
+                        } else {
+                            Helpers.showToast({
+                                icon: `${Icons.alert}`,
+                                message: 'Rellena los espacios correctamente!',
+                            }) 
+                        }
+                    }
                 }
             ]
         }).show()
-
     }
 }

@@ -190,13 +190,13 @@ export default class Personal {
                                         apellidos: document.getElementById('surname').value,
                                         perfil: document.getElementById('type-user').value
                                     }, true);
+                                    addPersonal.dispose()
                                 } else {
                                     Helpers.showToast({
                                         icon: `${Icons.alert}`,
-                                        message: `No agregado, el usuario ${document.getElementById('id-user').value} ya existe!`,
+                                        message: `El usuario ${document.getElementById('id-user').value} ya existe!`,
                                     }) 
                                 }
-                                addPersonal.dispose()
                             } catch (e) {
                                 console.log(e);
                             } 

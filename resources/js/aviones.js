@@ -1,7 +1,5 @@
 'use strict';
 
-// import Helpers from "./helpers";
-
 export default class Aviones {
     static #table
 
@@ -73,19 +71,8 @@ export default class Aviones {
                     callBack: async () => {
                         if (Helpers.expresiones.other.test(document.getElementById('modelo').value)) {
                             try {
-                                let response1 = await Helpers.fetchData(`${localStorage.getItem('url')}/aviones/${info.matricula}`,
-                                {
-                                    method: 'PUT',
-                                    body: {
-                                        matricula: info.matricula,
-                                        modelo: document.getElementById('modelo').value
-                                    }
-                                })
+                                let response1 = await Helpers.fetchData(`${localStorage.getItem("url")}/sillas/avion/${info.matricula}`, { method: 'DELETE' })
                                 if (response1.message == 'ok') {
-                                    alert("modifico el modelo")
-                                    cell.getRow().update({
-                                        "modelo": document.getElementById('modelo').value
-                                    })
                                     let response2 = await Helpers.fetchData(`${localStorage.getItem("url")}/sillas`,
                                     {
                                         method: 'POST',
@@ -96,30 +83,92 @@ export default class Aviones {
                                         }
                                     })
                                     if (response2.message == 'ok') {
-                                        alert("modifico las sillas")
-                                        Helpers.showToast({
-                                            icon: `${Icons.check}`,
-                                            message: 'Avión modificado exitosamente!',
-                                        })
                                         cell.getRow().update({
                                             "ejecutivas": document.getElementById('executive').value,
                                             "economicas": document.getElementById('economic').value
                                         })
+                                        let response3 = await Helpers.fetchData(`${localStorage.getItem('url')}/aviones/${info.matricula}`,
+                                        {
+                                            method: 'PUT',
+                                            body: {
+                                                matricula: info.matricula,
+                                                modelo: document.getElementById('modelo').value
+                                            }
+                                        })
+                                        if (response3.message == 'ok') {
+                                            cell.getRow().update({
+                                                "modelo": document.getElementById('modelo').value
+                                            })
+                                            Helpers.showToast({
+                                                icon: `${Icons.check}`,
+                                                message: 'Avión modificado exitosamente!',
+                                            })
+                                        } else {
+                                            Helpers.showToast({
+                                                icon: `${Icons.alert}`,
+                                                message: `${response3.message}`,
+                                            })
+                                        }
                                         editPlane.dispose()
                                     } else {
                                         Helpers.showToast({
                                             icon: `${Icons.alert}`,
-                                            message: `Se modificó el modelo pero ${response2.message}`,
+                                            message: `${response2.message}`,
                                         })
                                     }
-
                                 } else {
                                     Helpers.showToast({
                                         icon: `${Icons.alert}`,
                                         message: `${response1.message}`,
                                     })
                                 }
-                                editPlane.dispose()
+                                // let response1 = await Helpers.fetchData(`${localStorage.getItem('url')}/aviones/${info.matricula}`,
+                                // {
+                                //     method: 'PUT',
+                                //     body: {
+                                //         matricula: info.matricula,
+                                //         modelo: document.getElementById('modelo').value
+                                //     }
+                                // })
+                                // if (response1.message == 'ok') {
+                                //     alert("modifico el modelo")
+                                //     cell.getRow().update({
+                                //         "modelo": document.getElementById('modelo').value
+                                //     })
+                                //     let response2 = await Helpers.fetchData(`${localStorage.getItem("url")}/sillas`,
+                                //     {
+                                //         method: 'POST',
+                                //         body: {
+                                //             avion: info.matricula,
+                                //             ejecutivas: document.getElementById('executive').value,
+                                //             economicas: document.getElementById('economic').value
+                                //         }
+                                //     })
+                                //     if (response2.message == 'ok') {
+                                //         alert("modifico las sillas")
+                                //         Helpers.showToast({
+                                //             icon: `${Icons.check}`,
+                                //             message: 'Avión modificado exitosamente!',
+                                //         })
+                                //         cell.getRow().update({
+                                //             "ejecutivas": document.getElementById('executive').value,
+                                //             "economicas": document.getElementById('economic').value
+                                //         })
+                                //         editPlane.dispose()
+                                //     } else {
+                                //         Helpers.showToast({
+                                //             icon: `${Icons.alert}`,
+                                //             message: `Se modificó el modelo pero ${response2.message}`,
+                                //         })
+                                //     }
+
+                                // } else {
+                                //     Helpers.showToast({
+                                //         icon: `${Icons.alert}`,
+                                //         message: `${response1.message}`,
+                                //     })
+                                // }
+                                // editPlane.dispose()
 
 
                             } catch (error) {
