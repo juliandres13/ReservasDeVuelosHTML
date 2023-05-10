@@ -1,2 +1,2 @@
 # ReservasDeVuelosHTML
-Mi proyecto de reservas de vuelos
+Mi proyecto de Reservas de Vuelos
