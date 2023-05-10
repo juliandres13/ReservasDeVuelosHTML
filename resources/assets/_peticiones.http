@@ -61,7 +61,7 @@ DELETE http://localhost:4567/usuarios/P0090
 GET http://localhost:4567/trayectos
 
 ### buscar un trayecto
-GET http://localhost:4567/trayectos/origen=Cali&destino=Bucaramanga
+GET http://localhost:4567/trayectos/origen=Pensilvania&destino=Supia
 
 ### crear un trayecto
 POST http://localhost:4567/trayectos
@@ -70,7 +70,7 @@ Content-Type: application/json
 {
     "origen": "Supia",
     "destino": "Manizales",
-    "costo": 22000,
+    "costo": 300,
     "duracion": "PT1H30M"
 }
 
@@ -81,8 +81,8 @@ Content-Type: application/json
 {
     "origen": "Medellín",
     "destino": "Manizales",
-    "costo": 199999,
-    "duracion": "PT50M"
+    "costo": 300,
+    "duracion": "PT58M"
 }
 
 ### eliminar un trayecto

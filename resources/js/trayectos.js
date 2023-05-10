@@ -1,6 +1,4 @@
 'use strict';
-// import Modal from './modal';
-// import Helpers from './helpers';
 export default class Trayectos {
     static #table
     
@@ -30,8 +28,8 @@ export default class Trayectos {
                     let value = cell.getValue()
                     return Duration.fromISO(value).toFormat(outputFormat)
                 }},
-                { formatter: this.#editRowButton, width: 40, hozAlign: "center" },
-                { formatter: this.#deleteRowButton, width: 40, hozAlign: "center" }
+                { formatter: this.#editRowButton, width: 40, hozAlign: "center", cellClick: this.#updateTrayecto},
+                { formatter: this.#deleteRowButton, width: 40, hozAlign: "center", cellClick: this.#deleteTrayecto}
             ],
             footerElement: `
                 <div class='flex justify-end w-full'>
@@ -53,8 +51,8 @@ export default class Trayectos {
             buttons: [
                 {
                     id: "add-path",
-                    style: "btn btn-outline btn-accent",
-                    html: `${Icons.confirm}<span>Crear Trayecto</span>`,
+                    style: "btn btn-outline btn-success",
+                    html: `${Icons.plusCircle}<span class="pl-1">Crear Trayecto</span>`,
                     callBack: async () => {
                         if (Helpers.expresiones.nombre.test(document.getElementById('origen').value) &&
                         Helpers.expresiones.nombre.test(document.getElementById('destino').value) &&
@@ -66,7 +64,7 @@ export default class Trayectos {
                                         origen: document.getElementById('origen').value,
                                         destino: document.getElementById('destino').value,
                                         costo: document.getElementById('costo').value,
-                                        duracion: document.getElementById('duracion').value
+                                        duracion: Duration.fromObject(Duration.fromISOTime(document.getElementById('duracion').value).toObject()).toISO()
                                     }
                                 })
                                 if (response.message == 'ok') {
@@ -78,7 +76,7 @@ export default class Trayectos {
                                         origen: document.getElementById('origen').value,
                                         destino: document.getElementById('destino').value,
                                         costo: document.getElementById('costo').value,
-                                        duracion: document.getElementById('duracion').value
+                                        duracion: Duration.fromObject(Duration.fromISOTime(document.getElementById('duracion').value).toObject()).toISO()
                                     }, true);
                                     modalAddTrayecto.dispose()
                                 } else {
@@ -87,6 +85,117 @@ export default class Trayectos {
                                         message: `${response.message}`,
                                     }) 
                                 }
+                            } catch (error) {
+                                console.log(error);
+                            }
+                        } else {
+                            Helpers.showToast({
+                                icon: `${Icons.alert}`,
+                                message: 'Rellena los espacios correctamente!',
+                            }) 
+                        }
+                    }
+                }
+            ]
+        }).show()
+    }
+    static #deleteTrayecto = (e, cell) => {
+        const info = cell.getRow().getData()
+        let modalDeleteTrayecto = new Modal({
+            title: "Eliminar Trayecto",
+            content: `
+            <div class="p-8">
+                <p class="font-medium text-center text-xl">¿Seguro que quieres eliminar el trayecto <br> ${info.origen}-${info.destino}?</p>
+            </div>`,
+            buttons: [
+                {   
+                    id: "delete",
+                    style: "btn btn-outline btn-error",
+                    html: `${Icons.delete}<span class="pl-1">Eliminar Trayecto</span>`,
+                    callBack: async () => {
+                        try {
+                            let response = await Helpers.fetchData(`${localStorage.getItem('url')}/trayectos/origen=${info.origen}&destino=${info.destino}`, { method: 'DELETE' })
+                            if (response.message == 'ok') {
+                                Helpers.showToast({
+                                    icon: `${Icons.check}`,
+                                    message: "Trayecto eliminado exitosamente!",
+                                })
+                                cell.getRow().delete()
+                                modalDeleteTrayecto.dispose()
+                            } else {
+                                Helpers.showToast({
+                                    icon: `${Icons.alert}`,
+                                    message: `${response.message}`
+                                })
+                            }
+                        } catch (error) {
+                            console.log(error);
+                        }
+                    }
+                }
+            ]
+        }).show()
+    }
+    static #updateTrayecto = (e, cell) => {
+        const info = cell.getRow().getData()
+        let modalUpdateTrayecto = new Modal({
+            title: "Editar Trayecto",
+            content: `
+            <form class="w-full mx-auto grid gap-5">
+                <h2 class="font-bold">Trayecto ${info.origen}-${info.destino}</h2>
+                <div class="grid media-600:grid-cols-2 gap-5">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 font-bold mb-2" for="costo">
+                            Costo
+                        </label>
+                        <input
+                            class="appearance-none border-2 rounded w-full py-2 px-3 text-gray-700 leading-tight outline-none focus:border-blue-800 transition-all duration-500"
+                            id="costo" type="number" value="${info.costo}" min="50000" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 font-bold mb-2" for="duracion">
+                            Duración
+                        </label>
+                        <input
+                            class="appearance-none border-2 rounded w-full py-2 px-3 text-gray-700 leading-tight outline-none focus:border-blue-800 transition-all duration-500"
+                            id="duracion" type="text" placeholder="00:00" value="${Duration.fromISO(info.duracion).toFormat("hh:mm")}" required>
+                    </div>
+                </div>
+            </form>
+            `,
+            buttons: [
+                {
+                    id: "update",
+                    html: `${Icons.penFill}<span class="pl-1">Actualizar Trayecto</span>`,
+                    style: "btn btn-outline btn-info",
+                    callBack: async () => {
+                        if (Helpers.expresiones.duration.test(document.getElementById('duracion').value)) {
+                            try {
+                                let response = await Helpers.fetchData(`${localStorage.getItem('url')}/trayectos`, {
+                                    method: 'PUT',
+                                    body: {
+                                        origen: info.origen,
+                                        destino: info.destino,
+                                        costo: document.getElementById('costo').value,
+                                        duracion: Duration.fromObject(Duration.fromISOTime(document.getElementById('duracion').value).toObject()).toISO()
+                                    }
+                                })
+                                if (response.message == 'ok') {
+                                    Helpers.showToast({
+                                        icon: `${Icons.check}`,
+                                        message: 'Trayecto actualizado exitosamente!',
+                                    })
+                                    cell.getRow().update({
+                                        "costo": document.getElementById('costo').value,
+                                        "duracion": Duration.fromObject(Duration.fromISOTime(document.getElementById('duracion').value).toObject()).toISO()
+                                    })
+                                } else {
+                                    Helpers.showToast({
+                                        icon: `${Icons.alert}`,
+                                        message: `${response.message}!`
+                                    }) 
+                                }
+                                modalUpdateTrayecto.dispose()
                             } catch (error) {
                                 console.log(error);
                             }

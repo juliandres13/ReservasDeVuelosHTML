@@ -2,8 +2,10 @@
 
 export default class Auxiliar {
     #data
-    constructor(personalData) {
+    #callBack
+    constructor(personalData, callBack) {
         this.#data = personalData
+        this.#callBack = callBack
 
         document.querySelector('.navegacion').innerHTML = `
         <nav class="nav hidden media-1080:flex flex-shrink basis-auto justify-center items-center">
@@ -41,7 +43,7 @@ export default class Auxiliar {
 
         const icons = document.querySelector('.icons')
         const navBarToggle = document.querySelector('#bars')
-        const listOptions = document.querySelectorAll('.search, .tickets, .contact, .help, .account, .log-out, .log-text')
+        const listOptions = document.querySelectorAll('.search, .tickets, .contact, .help, .account, .log-out')
         const options = document.querySelectorAll('.nav-middle > a')
 
         document.getElementById('auxiliar').innerHTML = `
@@ -114,12 +116,11 @@ export default class Auxiliar {
             case 'log-out':
                 localStorage.removeItem("user")
                 Helpers.configPage('bg-img-aux', 'bg-img-pag-principal')
-                const { default: Index } = await import(`./index.mjs`)
-                new Index();
-                break;
-            case 'log-text':
-                const { default: Auxiliar } = await import(`./auxiliar.js`)
-                new Auxiliar(this.#data);
+                document.getElementById('a-log').classList.remove('log-text')
+                if (document.getElementById('a-log').classList.contains('text-gray-200')) {
+                    document.getElementById('a-log').classList.replace('text-gray-200', 'text-black')
+                }
+                this.#callBack()
                 break;
             default:
                 break;
@@ -133,7 +134,7 @@ export default class Auxiliar {
                 break;
             case 'Trayectos':
                 const { default: Trayectos } = await import(`./trayectos.js`)
-                new Trayectos()
+                Trayectos.init()
                 break;
             case 'Reservas':
                 const { default: Reservas } = await import(`./reservas.js`)

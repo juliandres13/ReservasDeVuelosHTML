@@ -2,8 +2,10 @@
 
 export default class Pasajero {
     #data
-    constructor(data) {
+    #callBack
+    constructor(data, callBack) {
         this.#data = data
+        this.#callBack = callBack
 
         document.querySelector('.navegacion').innerHTML = `
             <nav class="nav hidden media-1080:flex flex-shrink basis-auto justify-center items-center">
@@ -41,7 +43,7 @@ export default class Pasajero {
 
         const icons = document.querySelector('.icons')
         const navBarToggle = document.querySelector('#bars')
-        const listOptions = document.querySelectorAll('.search, .personal-data, .contact, .help, .account, .log-out, .log-text')
+        const listOptions = document.querySelectorAll('.search, .personal-data, .contact, .help, .account, .log-out')
         const options = document.querySelectorAll('.nav-middle > a')
 
         document.getElementById('custom').innerHTML = `
@@ -107,12 +109,7 @@ export default class Pasajero {
             case 'log-out':
                 localStorage.removeItem("user")
                 Helpers.configPage('bg-img-customer', 'bg-img-pag-principal')
-                const { default: Index } = await import(`./index.mjs`)
-                new Index();
-                break;
-            case 'log-text':
-                const { default: Pasajero } = await import(`./customer.js`)
-                new Pasajero(this.#data);
+                this.#callBack()
                 break;
             default:
                 break;

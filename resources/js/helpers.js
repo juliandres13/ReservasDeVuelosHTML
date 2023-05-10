@@ -101,7 +101,8 @@ export default class Helpers {
         nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
         password: /^.{3,12}$/, // 3 a 12 digitos.
         other: /^[a-zA-Z0-9\s]{4,16}$/,
-        duration: /PT\d{1,2}H\d{2}M/
+        duration: /^\d{2}:\d{2}$/,
+        numeros: /^[0-9]+$/
     }
 
     static campos = {
@@ -173,7 +174,7 @@ export default class Helpers {
             e.preventDefault();
             const nav = document.querySelector('header > nav')
             const elements = document.querySelectorAll('nav > nav > a, .navegacion a, .navegacion i')
-            const logo = document.querySelector('.logo > a')
+            const logo = document.getElementById('a-log')
 
             if (window.scrollY > 0) {
                 if (logo.classList.contains('log-text')) {
@@ -216,7 +217,6 @@ export default class Helpers {
      * @param {*} main Elemento HTML
      */
     static async loadUserPage(response, init) {
-        
 
         let user = {}
 
@@ -235,13 +235,14 @@ export default class Helpers {
             Helpers.configPage('bg-img-pag-principal', 'bg-img-customer')
             await Helpers.loadPage("./resources/html/customer.html", 'main');
             const { default: Pasajero } = await import(`./customer.js`)
-            new Pasajero(user)
+            new Pasajero(user, init)
 
         } else if (user.perfil === 'AUXILIAR') {
             Helpers.configPage('bg-img-pag-principal', 'bg-img-aux')
+            document.getElementById('a-log').classList.add('log-text')
             await Helpers.loadPage("./resources/html/auxiliar.html", 'main');
             const { default: Auxiliar } = await import(`./auxiliar.js`)
-            new Auxiliar(user)
+            new Auxiliar(user, init)
 
         } else if (user.perfil === 'ADMINISTRADOR') {
             Helpers.configPage('bg-img-pag-principal', 'bg-img-admin')

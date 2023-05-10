@@ -33,6 +33,9 @@ export default class Aviones {
                 </div>
             `.trim()
         })
+        this.#table.on("tableBuilt", () => {
+            document.getElementById('btn-footer').addEventListener('click', this.#createPlane)
+        })
     }
     static #editRowButton = () => `<button class="text-green-600" title="Editar">${Icons.edit}</button>`
     static #deleteRowButton = () => `<button class="text-red-600" title="Eliminar">${Icons.delete}</button>`
@@ -66,8 +69,8 @@ export default class Aviones {
             buttons: [
                 {
                     id: "ok",
-                    style: "rounded-md py-1 text-green-500 pl-3 pr-3 bg-white hover:bg-green-200",
-                    html: `${Icons.ok}<span class="pt-1 pl-1 text-black font-semibold">Terminado</span>`,
+                    style: "btn btn-outline btn-info",
+                    html: `${Icons.penFill}<span class="pl-1">actualizar avión</span>`,
                     callBack: async () => {
                         if (Helpers.expresiones.other.test(document.getElementById('modelo').value)) {
                             try {
@@ -122,59 +125,9 @@ export default class Aviones {
                                         message: `${response1.message}`,
                                     })
                                 }
-                                // let response1 = await Helpers.fetchData(`${localStorage.getItem('url')}/aviones/${info.matricula}`,
-                                // {
-                                //     method: 'PUT',
-                                //     body: {
-                                //         matricula: info.matricula,
-                                //         modelo: document.getElementById('modelo').value
-                                //     }
-                                // })
-                                // if (response1.message == 'ok') {
-                                //     alert("modifico el modelo")
-                                //     cell.getRow().update({
-                                //         "modelo": document.getElementById('modelo').value
-                                //     })
-                                //     let response2 = await Helpers.fetchData(`${localStorage.getItem("url")}/sillas`,
-                                //     {
-                                //         method: 'POST',
-                                //         body: {
-                                //             avion: info.matricula,
-                                //             ejecutivas: document.getElementById('executive').value,
-                                //             economicas: document.getElementById('economic').value
-                                //         }
-                                //     })
-                                //     if (response2.message == 'ok') {
-                                //         alert("modifico las sillas")
-                                //         Helpers.showToast({
-                                //             icon: `${Icons.check}`,
-                                //             message: 'Avión modificado exitosamente!',
-                                //         })
-                                //         cell.getRow().update({
-                                //             "ejecutivas": document.getElementById('executive').value,
-                                //             "economicas": document.getElementById('economic').value
-                                //         })
-                                //         editPlane.dispose()
-                                //     } else {
-                                //         Helpers.showToast({
-                                //             icon: `${Icons.alert}`,
-                                //             message: `Se modificó el modelo pero ${response2.message}`,
-                                //         })
-                                //     }
-
-                                // } else {
-                                //     Helpers.showToast({
-                                //         icon: `${Icons.alert}`,
-                                //         message: `${response1.message}`,
-                                //     })
-                                // }
-                                // editPlane.dispose()
-
-
                             } catch (error) {
                                 console.log(error);
                             }
-
                         } else {
                             Helpers.showToast({
                                 icon: `${Icons.alert}`,
@@ -186,7 +139,107 @@ export default class Aviones {
             ]
         }).show()
     }
+    static #createPlane = () => {
+        let modalAddPlane = new Modal({
+            title: "Añadir Avión",
+            content: `
+            <form class="grid gap-5">
+                <h2 class="font-bold">Avión</h2>
+                <div class="media-600:grid-cols-2 gap-5 grid">
+                    <div class="inline-grid w-full mb-3">
+                        <label class="mb-2 font-semibold" for="matricula">Matrícula del Avión</label>
+                        <input type="text" id="matricula" class="bg-white border-gray-300 border-2 rounded-md p-2 focus:border-blue-800 border-solid outline-none transition-all duration-500" placeholder="Matrícula">
+                    </div>
+                    <div class="inline-grid w-full mb-3">
+                        <label class="mb-2 font-semibold" for="modelo">Modelo del Avión</label>
+                        <input type="text" id="modelo" class="bg-white border-gray-300 border-2 rounded-md p-2 focus:border-blue-800 border-solid outline-none transition-all duration-500" placeholder="Modelo">
+                    </div>
+                </div>
+                <h2 class="font-bold">Sillas</h2>
+                <div class="media-600:grid-cols-2 gap-5 grid">
+                    <div class="inline-grid w-full mb-3">
+                        <label class="mb-2 font-semibold" for="executive">Ejecutivas</label>
+                        <input type="text" id="executive" class="bg-white border-gray-300 border-2 rounded-md p-2 focus:border-blue-800 border-solid outline-none transition-all duration-500" placeholder="Sillas Ejecutivas">
+                    </div>
+                    <div class="inline-grid w-full mb-3">
+                        <label class="mb-2 font-semibold" for="economic">Económicas</label>
+                        <input type="text" id="economic" class="bg-white border-gray-300 border-2 rounded-md p-2 focus:border-blue-800 border-solid outline-none transition-all duration-500" placeholder="Sillas Económicas">
+                    </div>
+                </div>
+            </form>`,
+            buttons: [
+                {
+                    id: "create-user",
+                    style: "btn btn-outline btn-success",
+                    html: `${Icons.plusCircle}<span class="pl-1">Añadir Avión</span>`,
+                    callBack: async () => {
+                        if (
+                        Helpers.expresiones.numeros.test(document.getElementById('executive').value) &&
+                        Helpers.expresiones.other.test(document.getElementById('modelo').value) &&
+                        Helpers.expresiones.numeros.test(document.getElementById('economic').value) &&
+                        Helpers.expresiones.other.test(document.getElementById('matricula').value)) {
+                            try {
+                                let response = await Helpers.fetchData(`${localStorage.getItem("url")}/aviones`,
+                                {
+                                    method: 'POST',
+                                    body: {
+                                        modelo: document.getElementById('modelo').value,
+                                        matricula: document.getElementById('matricula').value,
+                                    }
+                                })
+                                if (response.message == 'ok') {
 
+                                    this.#table.addRow({
+                                        modelo: document.getElementById('modelo').value,
+                                        matricula: document.getElementById('matricula').value,
+                                        ejecutivas: 0,
+                                        economicas: 0
+                                    }, true);
+                                    
+                                    let response2 = await Helpers.fetchData(`${localStorage.getItem("url")}/sillas`, {
+                                        method: 'POST',
+                                        body: {
+                                            avion: document.getElementById('matricula').value,
+                                            ejecutivas: document.getElementById('executive').value,
+                                            economicas: document.getElementById('economic').value
+                                        }
+                                    })
+                                    if (response2.message == 'ok') {
+                                        this.#table.getRows()[0].update({
+                                            "ejecutivas": document.getElementById('executive').value,
+                                            "economicas": document.getElementById('economic').value
+                                        })
+                                        Helpers.showToast({
+                                            icon: `${Icons.check}`,
+                                            message: "Avión añadido exitosamente!",
+                                        })
+                                    } else {
+                                        Helpers.showToast({
+                                            icon: `${Icons.alert}`,
+                                            message: `${response2.message}`,
+                                        })
+                                    }
+                                    modalAddPlane.dispose()
+                                } else {
+                                    Helpers.showToast({
+                                        icon: `${Icons.alert}`,
+                                        message: `${response.message}`,
+                                    })
+                                }
+                            } catch (error) {
+                                console.log(error);
+                            }
+                        } else {
+                            Helpers.showToast({
+                                icon: `${Icons.alert}`,
+                                message: 'Rellena los espacios correctamente!',
+                            }) 
+                        }
+                    }
+                }
+            ]
+        }).show()
+    }
     static #delete = (e, cell) => {
         e.preventDefault();
         let info = cell.getRow().getData()
@@ -200,8 +253,8 @@ export default class Aviones {
             buttons: [ 
                 {
                     id: "eliminar",
-                    style: "rounded-md py-1 text-green-500 pl-3 pr-3 bg-white hover:bg-green-200",
-                    html: `${Icons.confirm}<span class="pt-1 pl-1 text-black font-semibold">Sí</span>`,
+                    style: "btn btn-outline btn-success",
+                    html: `${Icons.confirm}<span class="pl-1">Sí</span>`,
                     callBack: async () => {
                         try {
                             let response1 = await Helpers.fetchData(`${localStorage.getItem("url")}/sillas/avion/${info.matricula}`, { method: 'DELETE' })
@@ -232,8 +285,8 @@ export default class Aviones {
                     }
                 },{
                     id: "cancelar",
-                    style: "rounded-md text-red-500 py-1 pl-3 pr-3 bg-white hover:bg-red-200",
-                    html: `${Icons.cancel}<span class="pt-1 text-black font-semibold">No</span>`,
+                    style: "btn btn-outline btn-error",
+                    html: `${Icons.cancel}<span class="pl-1">No</span>`,
                     callBack: () => modal.dispose()
                 }
             ]

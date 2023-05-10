@@ -26,7 +26,7 @@ async function init() {
     
     if (localStorage.getItem("user") != null) {
         user = JSON.parse(localStorage.getItem("user"))
-        Helpers.loadUserPage({ data: { user } })
+        Helpers.loadUserPage({ data: { user } }, init)
     } else {
         await main();
     }
@@ -71,7 +71,6 @@ async function main() {
             <h3 class="text-black text-center font-semibold  media-1080:text-xl" style="margin-top: 40vh;" id="p-index">En nuestra página de vuelos, ofrecemos una amplia selección de opciones de viaje aéreo de las principales aerolíneas del mundo, con tarifas competitivas y herramientas de búsqueda avanzadas.</h3>
         </div>
     `
-
     await Helpers.loadPage('./resources/html/content.html', 'main')
 
     const loginIcons = document.querySelector('.icons')

@@ -3,9 +3,9 @@
 export default class Administrador {
     #data
     #callBack
-    constructor(data, init) {
+    constructor(data, callBack) {
         this.#data = data
-        this.#callBack = init
+        this.#callBack = callBack
         document.querySelector('.navegacion').innerHTML = `
             <nav class="nav hidden media-1080:flex flex-shrink basis-auto justify-center items-center">
                 <a href="" class="search hover:text-white"><i class="fa-solid fa-magnifying-glass"></i> buscar</a>
@@ -40,7 +40,7 @@ export default class Administrador {
         `
         const icons = document.querySelector('.icons')
         const navBarToggle = document.querySelector('#bars')
-        const listOptions = document.querySelectorAll('.search, .company, .help, .account, .log-out, .log-text')
+        const listOptions = document.querySelectorAll('.search, .company, .help, .account, .log-out')
         const options = document.querySelectorAll('.nav-middle > a')
 
         navBarToggle.addEventListener('click', () => {
@@ -86,10 +86,6 @@ export default class Administrador {
             case 'account':
                 console.log("cargó");
                 break;
-            case 'log-text':
-                const { default: Administrador } = await import(`./admin.js`)
-                new Administrador(this.#data);
-                break;
             default:
                 break;
         }
@@ -102,7 +98,7 @@ export default class Administrador {
                 break;
             case 'Trayectos':
                 const { default: Trayectos } = await import(`./trayectos.js`)
-                Trayectos.init()
+                await Trayectos.init()
                 break;
             case 'Vuelos':
                 const { default: Vuelos } = await import(`./vuelos.js`)

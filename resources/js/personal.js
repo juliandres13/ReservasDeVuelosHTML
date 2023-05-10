@@ -40,7 +40,6 @@ export default class Personal {
     
     static #formEditPersonal = (e, cell) => {
         e.preventDefault()
-        // console.info(cell.getRow().getData());
         let formEditPersonal = new Modal({
             title: "Edición de Usuarios",
             content: `
@@ -72,8 +71,8 @@ export default class Personal {
             buttons: [
                 {
                     id: "ok",
-                    style: "rounded-md py-1 text-green-500 pl-3 pr-3 bg-white hover:bg-green-200",
-                    html: `${Icons.ok}<span class="pt-1 text-black font-semibold">Terminado</span>`,
+                    style: "btn btn-outline btn-info",
+                    html: `${Icons.penFill}<span class="pl-1">Terminado</span>`,
                     callBack: async () => {
                         if (Helpers.expresiones.nombre.test(document.getElementById('name').value) &&
                             Helpers.expresiones.nombre.test(document.getElementById('surname').value) &&
@@ -162,8 +161,8 @@ export default class Personal {
             buttons: [
                 {
                     id: "create-user",
-                    style: "rounded-md py-1 text-green-500 pl-3 pr-3 bg-white hover:bg-green-200",
-                    html: `${Icons.confirm}<span class="pt-1 pl-1 text-black font-semibold">Crear Usuario</span>`,
+                    style: "btn btn-outline btn-success",
+                    html: `${Icons.addPerson}<span class="pl-1">Crear Usuario</span>`,
                     callBack: async () => {
                         if (Helpers.expresiones.nombre.test(document.getElementById('name').value) &&
                         Helpers.expresiones.nombre.test(document.getElementById('surname').value) &&
@@ -213,7 +212,7 @@ export default class Personal {
     }
     static #delete = (e, cell) => {
         e.preventDefault();
-        let info = cell.getRow().getData()
+        const info = cell.getRow().getData()
         let modal = new Modal({
             title: "Eliminar Usuario",
             content: `
@@ -224,8 +223,8 @@ export default class Personal {
             buttons: [
                 {
                     id: "eliminar",
-                    style: "rounded-md py-1 text-green-500 pl-3 pr-3 bg-white hover:bg-green-200",
-                    html: `${Icons.confirm}<span class="pt-1 pl-1 text-black font-semibold">Sí</span>`,
+                    style: "btn btn-outline btn-success",
+                    html: `${Icons.confirm}<span class="pl-1">Sí</span>`,
                     callBack: async () => {
                         try {
                             let user = await Helpers.fetchData(`${localStorage.getItem("url")}/usuarios/${info.identificacion}`, { method: 'DELETE' })
@@ -248,8 +247,8 @@ export default class Personal {
                     }
                 },{
                     id: "cancelar",
-                    style: "rounded-md text-red-500 py-1 pl-3 pr-3 bg-white hover:bg-red-200",
-                    html: `${Icons.cancel}<span class="pt-1 text-black font-semibold">No</span>`,
+                    style: "btn btn-outline btn-error",
+                    html: `${Icons.cancel}<span class="pl-1">No</span>`,
                     callBack: () => modal.dispose()
                 }
             ]

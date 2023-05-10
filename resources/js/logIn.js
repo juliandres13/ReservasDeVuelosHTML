@@ -4,10 +4,10 @@ export default class InicioSesion {
     #op
     #modal
     #callBack
-    constructor(option, modal, init) {
+    constructor(option, modal, callBack) {
         this.#op = option
         this.#modal = modal
-        this.#callBack = init
+        this.#callBack = callBack
         this.#changeForm();
 
         const button = document.getElementById('ok');
@@ -109,7 +109,7 @@ export default class InicioSesion {
         }
     }
     /**
-     * Hace aparecer un formulario para logging o para registro
+     * Hace aparecer un formulario para login o para registro
      */
     async #changeForm() {
         if (this.#op == 'log-in-js') {

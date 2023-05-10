@@ -3622,25 +3622,67 @@ h6 {
   outline-offset:2px
 }
 
-.btn-accent{
+.btn-info{
   --tw-border-opacity:1;
-  border-color:hsl(var(--a) / var(--tw-border-opacity));
+  border-color:hsl(var(--in) / var(--tw-border-opacity));
   --tw-bg-opacity:1;
-  background-color:hsl(var(--a) / var(--tw-bg-opacity));
+  background-color:hsl(var(--in) / var(--tw-bg-opacity));
   --tw-text-opacity:1;
-  color:hsl(var(--ac) / var(--tw-text-opacity))
+  color:hsl(var(--inc, var(--nc)) / var(--tw-text-opacity))
 }
 
-.btn-accent:hover,
-    .btn-accent.btn-active{
+.btn-info:hover,
+    .btn-info.btn-active{
   --tw-border-opacity:1;
-  border-color:hsl(var(--af, var(--a)) / var(--tw-border-opacity));
+  border-color:hsl(var(--in) / var(--tw-border-opacity));
   --tw-bg-opacity:1;
-  background-color:hsl(var(--af, var(--a)) / var(--tw-bg-opacity))
+  background-color:hsl(var(--in) / var(--tw-bg-opacity))
 }
 
-.btn-accent:focus-visible{
-  outline:2px solid hsl(var(--a))
+.btn-info:focus-visible{
+  outline:2px solid hsl(var(--in))
+}
+
+.btn-success{
+  --tw-border-opacity:1;
+  border-color:hsl(var(--su) / var(--tw-border-opacity));
+  --tw-bg-opacity:1;
+  background-color:hsl(var(--su) / var(--tw-bg-opacity));
+  --tw-text-opacity:1;
+  color:hsl(var(--suc, var(--nc)) / var(--tw-text-opacity))
+}
+
+.btn-success:hover,
+    .btn-success.btn-active{
+  --tw-border-opacity:1;
+  border-color:hsl(var(--su) / var(--tw-border-opacity));
+  --tw-bg-opacity:1;
+  background-color:hsl(var(--su) / var(--tw-bg-opacity))
+}
+
+.btn-success:focus-visible{
+  outline:2px solid hsl(var(--su))
+}
+
+.btn-error{
+  --tw-border-opacity:1;
+  border-color:hsl(var(--er) / var(--tw-border-opacity));
+  --tw-bg-opacity:1;
+  background-color:hsl(var(--er) / var(--tw-bg-opacity));
+  --tw-text-opacity:1;
+  color:hsl(var(--erc, var(--nc)) / var(--tw-text-opacity))
+}
+
+.btn-error:hover,
+    .btn-error.btn-active{
+  --tw-border-opacity:1;
+  border-color:hsl(var(--er) / var(--tw-border-opacity));
+  --tw-bg-opacity:1;
+  background-color:hsl(var(--er) / var(--tw-bg-opacity))
+}
+
+.btn-error:focus-visible{
+  outline:2px solid hsl(var(--er))
 }
 
 .btn.glass:hover,
@@ -3929,8 +3971,16 @@ h6 {
   background-image:linear-gradient(45deg, transparent 65%, hsl(var(--chkbg)) 65.99%), linear-gradient(-45deg, transparent 75%, hsl(var(--chkbg)) 75.99%), linear-gradient(45deg, hsl(var(--chkbg)) 40%, transparent 40.99%), linear-gradient(-45deg, hsl(var(--chkbg)) 30%, hsl(var(--chkfg)) 30.99%, hsl(var(--chkfg)) 40%, transparent 40.99%), linear-gradient(45deg, hsl(var(--chkfg)) 50%, hsl(var(--chkbg)) 50.99%)
 }
 
-.drawer-toggle:focus-visible ~ .drawer-content .drawer-button.btn-accent{
-  outline:2px solid hsl(var(--a))
+.drawer-toggle:focus-visible ~ .drawer-content .drawer-button.btn-info{
+  outline:2px solid hsl(var(--in))
+}
+
+.drawer-toggle:focus-visible ~ .drawer-content .drawer-button.btn-success{
+  outline:2px solid hsl(var(--su))
+}
+
+.drawer-toggle:focus-visible ~ .drawer-content .drawer-button.btn-error{
+  outline:2px solid hsl(var(--er))
 }
 
 .label a:hover{
@@ -4707,10 +4757,6 @@ main > section{
   float:right
 }
 
-.m-0{
-  margin:0px
-}
-
 .mx-0{
   margin-left:0px;
   margin-right:0px
@@ -4805,10 +4851,6 @@ main > section{
 
 .mt-8{
   margin-top:2rem
-}
-
-.box-border{
-  box-sizing:border-box
 }
 
 .block{
@@ -5004,10 +5046,6 @@ main > section{
   border-top-right-radius:0.25rem
 }
 
-.border{
-  border-width:1px
-}
-
 .border-0{
   border-width:0px
 }
@@ -5032,10 +5070,6 @@ main > section{
 
 .border-b-2{
   border-bottom-width:2px
-}
-
-.border-r{
-  border-right-width:1px
 }
 
 .border-solid{
@@ -5280,10 +5314,6 @@ main > section{
   padding-left:0.625rem
 }
 
-.pl-3{
-  padding-left:0.75rem
-}
-
 .pl-4{
   padding-left:1rem
 }
@@ -5312,16 +5342,8 @@ main > section{
   padding-right:0.625rem
 }
 
-.pr-3{
-  padding-right:0.75rem
-}
-
 .pr-6{
   padding-right:1.5rem
-}
-
-.pt-1{
-  padding-top:0.25rem
 }
 
 .pt-2{
@@ -5561,16 +5583,6 @@ main > section{
 .hover\:bg-gray-500:hover{
   --tw-bg-opacity:1;
   background-color:rgb(107 114 128 / var(--tw-bg-opacity))
-}
-
-.hover\:bg-green-200:hover{
-  --tw-bg-opacity:1;
-  background-color:rgb(187 247 208 / var(--tw-bg-opacity))
-}
-
-.hover\:bg-red-200:hover{
-  --tw-bg-opacity:1;
-  background-color:rgb(254 202 202 / var(--tw-bg-opacity))
 }
 
 .hover\:bg-transparent:hover{
