@@ -12,14 +12,16 @@ export default class Reservas {
         `
         let response = await Helpers.fetchData(`${localStorage.getItem("url")}/reservas`)
 
+        const data = Helpers.flat(response.data)
+
         let table = new Tabulator("#reservas", {
-            data: response.data,
+            data: data,
             layout: "fitColumns",
             columns: [
-                { title: "ID", field: "pasajero.identificacion", hozAlign: "center", headerFilter:"input", headerFilterLiveFilter: true},
-                { title: "NOMBRES", field: "pasajero.nombres", hozAlign: "center", headerFilter:"input", headerFilterLiveFilter: true},
-                { title: "APELLIDOS", field: "pasajero.apellidos", hozAlign: "center", headerFilter:"input", headerFilterLiveFilter: true},
-                { title: "PERFIL", field: "pasajero.perfil", hozAlign: "center", headerFilter:"input", headerFilterLiveFilter: true},
+                { title: "ID", field: "identificacion", hozAlign: "center", headerFilter:"input", headerFilterLiveFilter: true},
+                { title: "NOMBRES", field: "nombres", hozAlign: "center", headerFilter:"input", headerFilterLiveFilter: true},
+                { title: "APELLIDOS", field: "apellidos", hozAlign: "center", headerFilter:"input", headerFilterLiveFilter: true},
+                { title: "PERFIL", field: "perfil", hozAlign: "center", headerFilter:"input", headerFilterLiveFilter: true},
                 { title: "CANCELADA", field: "cancelada", hozAlign: "center", formatter:"tickCross", formatterParams: {
                     allowEmpty: true,
                     allowTruthy: true,

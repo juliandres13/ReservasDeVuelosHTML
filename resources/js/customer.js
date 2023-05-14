@@ -117,9 +117,9 @@ export default class Pasajero {
     }
     async #options(option) {
         switch (option) {
-            case 'Reservas':
-                const { default: Reservas } = await import(`./reservas.js`)
-                new Reservas()
+            case 'Mis Reservas':
+                // const { default: Reservas } = await import(`./reservas.js`)
+                // new Reservas()
                 break;
             case 'Vuelos':
                 const { default: Vuelos } = await import(`./vuelos.js`)

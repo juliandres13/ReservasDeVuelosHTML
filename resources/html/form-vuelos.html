@@ -1,0 +1,39 @@
+<html>
+
+<body>
+    <form id="form-vuelos" class="grid gap-5">
+        <div class="grid gap-5 media-600:grid-cols-2">
+            <div class="inline-grid w-full mb-3">
+                <label class="mb-2 font-semibold" for="path">Trayecto</label>
+                <select
+                    class="w-full rounded-md h-11 border-2 border-solid border-gray-300 p-2 bg-white text-black outline-none transition-all duration-500 focus:border-blue-800"
+                    id="path" $4>
+                    $0
+                </select>
+            </div>
+            <div class="inline-grid w-full mb-3">
+                <label class="mb-2 font-semibold" for="plane">Avión</label>
+                <select
+                    class="w-full rounded-md h-11 border-2 border-solid border-gray-300 p-2 bg-white text-black outline-none transition-all duration-500 focus:border-blue-800"
+                    id="plane" $5>
+                    $1
+                </select>
+            </div>
+        </div>
+        <div class="grid gap-5 media-600:grid-cols-2">
+            <div class="inline-grid w-full mb-3">
+                <label class="mb-2 font-semibold" for="date-time">Fecha y Hora</label>
+                <input type="datetime-local" id="date-time" min="2023-01-01T00:00"
+                    class="bg-white border-gray-300 p-2 focus:border-blue-800 border-solid outline-none transition-all duration-500 border-2 rounded-md" value="$2" required $6>
+            </div>
+            <div class="inline-grid w-full mb-3">
+                <label class="mb-2 font-semibold" for="estado">Estado del vuelo</label>
+                <label class="cursor-pointer p-0 label justify-start">
+                    <input id="estado" type="checkbox" class="toggle toggle-success mr-3" $3/>
+                    <span class="text-medium">Cancelar el vuelo</span>
+                </label>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

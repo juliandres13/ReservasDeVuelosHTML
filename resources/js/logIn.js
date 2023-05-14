@@ -56,10 +56,10 @@ export default class InicioSesion {
                     this.#modal.dispose()
                     form.reset();
                 } else {
-                    Helpers.showToast({
-                        icon: `${Icons.alert}`,
-                        message: 'Usuario o contraseña errónea',
-                        log: response
+                    
+                    Toast.info({
+                        message: `${response.message}`,
+                        mode: "error"
                     })
                 }
             } catch (e) {
@@ -95,10 +95,9 @@ export default class InicioSesion {
                     this.#modal.dispose()
                     form.reset();
                 } else {
-                    Helpers.showToast({
-                        icon: `${Icons.alert}`,
-                        message: 'Registro Fallido!',
-                        log: response
+                    Toast.info({
+                        message: `${response.message}`,
+                        mode: "error"
                     })
                 }
             } catch (e) {

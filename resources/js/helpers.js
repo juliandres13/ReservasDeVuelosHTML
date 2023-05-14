@@ -38,34 +38,34 @@ export default class Helpers {
                 'Content-Type': 'application/json; charset=utf-8',
             }
         }
-        
+
         if ('body' in data) {
             data.body = JSON.stringify(data.body)
         }
         const respuesta = await fetch(url, data)
         return await respuesta.json()
     }
-    /**
-     * Despliega un aviso en la parte inferior de la pantalla
-     * @param {Object} param0 Un objeto con los datos del aviso
-     */
-    static showToast({ icon = 'icon', message = '¡Hola mundo!', log = '' } = {}) {
-        if (log) {
-            console.log(log)
-        }
-        // inyectar los elementos a mostrar en el toast
-        const toast = document.querySelector("#toast")
-        toast.innerHTML = `
-            <div id="img">${icon}</div>
-            <div id="desc">${message}</div>
-        `
-        toast.className = "show"
-        setTimeout(hide, 4000)
+    // /**
+    //  * Despliega un aviso en la parte inferior de la pantalla
+    //  * @param {Object} param0 Un objeto con los datos del aviso
+    //  */
+    // static showToast({ icon = 'icon', message = '¡Hola mundo!', log = '' } = {}) {
+    //     if (log) {
+    //         console.log(log)
+    //     }
+    //     // inyectar los elementos a mostrar en el toast
+    //     const toast = document.querySelector("#toast")
+    //     toast.innerHTML = `
+    //         <div id="img">${icon}</div>
+    //         <div id="desc">${message}</div>
+    //     `
+    //     toast.className = "show"
+    //     setTimeout(hide, 4000)
 
-        function hide() {
-            toast.className = toast.className.replace("show", "")
-        }
-    }
+    //     function hide() {
+    //         toast.className = toast.className.replace("show", "")
+    //     }
+    // }
     /**
      * Valida la entrada de caracteres en los campos de escritura
      * @param {*} expresion Expresión regular a evaluar en determinado campo de escritura
@@ -226,9 +226,9 @@ export default class Helpers {
             user = response.data
         }
 
-        Helpers.showToast({
-            icon: `${Icons.doorOpen}`,
-            message: `Hola ${user.nombres}!`
+        Toast.info({
+            message: `${user.nombres}`,
+            mode: "enter"
         })
 
         if (user.perfil === 'PASAJERO') {
@@ -330,6 +330,27 @@ export default class Helpers {
             }
         })
         return options
+    }
+    /**
+     * Aplica las reglas de validación definidas para un formulario HTML.
+     * Incluso puede indicar un callback como segundo argumento para complementar la validación
+     * @param {String} formSelector Una regla CSS para referenciar el formulario a validar
+     */
+    static okForm = (formSelector, callBack) => {
+        let ok = true
+        const form = document.querySelector(formSelector)
+        // si los datos del formulario no son válidos, forzar un submit para que se muestren los errores
+        if (!form.checkValidity()) {
+            let tmpSubmit = document.createElement("button")
+            form.appendChild(tmpSubmit)
+            tmpSubmit.click()
+            form.removeChild(tmpSubmit)
+            ok = false
+        }
+        if (typeof callBack === "function") {
+            ok = ok && callBack()
+        }
+        return ok
     }
 }
 /**

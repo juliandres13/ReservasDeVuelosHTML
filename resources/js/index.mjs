@@ -5,6 +5,7 @@ import { TabulatorFull as Tabulator } from '../../node_modules/tabulator-tables/
 import Helpers from "./helpers.js";
 import Modal from "./modal.js";
 import icons from "./icons.js";
+import Toast from "./toast.js";
 
 export default (async () => init())()
 
@@ -18,6 +19,7 @@ async function init() {
     window.Tabulator = Tabulator
     window.Modal = Modal
     window.Icons = icons
+    window.Toast = Toast
 
     const config = await Helpers.fetchData("./resources/assets/config.json")
     localStorage.setItem("url", config.url)

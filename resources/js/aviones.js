@@ -2,6 +2,7 @@
 
 export default class Aviones {
     static #table
+    static #modal
 
     static async init() {
         document.querySelector('#tablas').innerHTML = `
@@ -42,7 +43,7 @@ export default class Aviones {
     
     static #editPlane = (e, cell) => {
         const info = cell.getRow().getData()
-        let editPlane = new Modal({
+        this.#modal = new Modal({
             title: "Edición de Avión",
             content: `
             <form class="grid gap-5">
@@ -54,21 +55,21 @@ export default class Aviones {
                     </div>
                 </div>
                 <h2 class="font-bold">Sillas</h2>
-                <div class="grid-cols-2 gap-5 grid">
+                <div class="media-600:grid-cols-2 gap-5 grid">
                     <div class="inline-grid w-full mb-3">
                         <label class="mb-2 font-semibold" for="executive">Ejecutivas</label>
-                        <input type="text" id="executive" class="bg-white border-gray-300 border-2 rounded-md p-2 focus:border-blue-800 border-solid outline-none transition-all duration-500" placeholder="Sillas Ejecutivas" value="${cell.getRow().getData().ejecutivas}">
+                        <input type="number" id="executive" class="bg-white border-gray-300 border-2 rounded-md p-2 focus:border-blue-800 border-solid outline-none transition-all duration-500" placeholder="Sillas Ejecutivas" value="${cell.getRow().getData().ejecutivas}" required>
                     </div>
                     <div class="inline-grid w-full mb-3">
                         <label class="mb-2 font-semibold" for="economic">Económicas</label>
-                        <input type="text" id="economic" class="bg-white border-gray-300 border-2 rounded-md p-2 focus:border-blue-800 border-solid outline-none transition-all duration-500" placeholder="Sillas Económicas" value="${cell.getRow().getData().economicas}">
+                        <input type="number" id="economic" class="bg-white border-gray-300 border-2 rounded-md p-2 focus:border-blue-800 border-solid outline-none transition-all duration-500" placeholder="Sillas Económicas" value="${cell.getRow().getData().economicas}" required>
                     </div>
                 </div>
             </form>
             `,
             buttons: [
                 {
-                    id: "ok",
+                    id: "edit",
                     style: "btn btn-outline btn-info",
                     html: `${Icons.penFill}<span class="pl-1">actualizar avión</span>`,
                     callBack: async () => {
@@ -102,37 +103,37 @@ export default class Aviones {
                                             cell.getRow().update({
                                                 "modelo": document.getElementById('modelo').value
                                             })
-                                            Helpers.showToast({
-                                                icon: `${Icons.check}`,
+                                            Toast.info({
                                                 message: 'Avión modificado exitosamente!',
+                                                mode: "success"
                                             })
                                         } else {
-                                            Helpers.showToast({
-                                                icon: `${Icons.alert}`,
+                                            Toast.info({
                                                 message: `${response3.message}`,
+                                                mode: "error"
                                             })
                                         }
-                                        editPlane.dispose()
+                                        this.#modal.dispose()
                                     } else {
-                                        Helpers.showToast({
-                                            icon: `${Icons.alert}`,
+                                        Toast.info({
                                             message: `${response2.message}`,
+                                            mode: "info"
                                         })
                                     }
                                 } else {
-                                    Helpers.showToast({
-                                        icon: `${Icons.alert}`,
-                                        message: `${response1.message}`,
+                                    Toast.info({
+                                        message: `Sillas no modificadas, el ${info.matricula} existe en vuelos!`,
+                                        mode: "error"
                                     })
                                 }
                             } catch (error) {
                                 console.log(error);
                             }
                         } else {
-                            Helpers.showToast({
-                                icon: `${Icons.alert}`,
+                            Toast.info({
                                 message: 'Rellena los espacios correctamente!',
-                            }) 
+                                mode: "warning"
+                            })
                         }
                     }
                 }
@@ -140,7 +141,7 @@ export default class Aviones {
         }).show()
     }
     static #createPlane = () => {
-        let modalAddPlane = new Modal({
+        this.#modal = new Modal({
             title: "Añadir Avión",
             content: `
             <form class="grid gap-5">
@@ -159,24 +160,21 @@ export default class Aviones {
                 <div class="media-600:grid-cols-2 gap-5 grid">
                     <div class="inline-grid w-full mb-3">
                         <label class="mb-2 font-semibold" for="executive">Ejecutivas</label>
-                        <input type="text" id="executive" class="bg-white border-gray-300 border-2 rounded-md p-2 focus:border-blue-800 border-solid outline-none transition-all duration-500" placeholder="Sillas Ejecutivas">
+                        <input type="number" id="executive" class="bg-white border-gray-300 border-2 rounded-md p-2 focus:border-blue-800 border-solid outline-none transition-all duration-500" placeholder="Sillas Ejecutivas" required>
                     </div>
                     <div class="inline-grid w-full mb-3">
                         <label class="mb-2 font-semibold" for="economic">Económicas</label>
-                        <input type="text" id="economic" class="bg-white border-gray-300 border-2 rounded-md p-2 focus:border-blue-800 border-solid outline-none transition-all duration-500" placeholder="Sillas Económicas">
+                        <input type="number" id="economic" class="bg-white border-gray-300 border-2 rounded-md p-2 focus:border-blue-800 border-solid outline-none transition-all duration-500" placeholder="Sillas Económicas" required>
                     </div>
                 </div>
             </form>`,
             buttons: [
                 {
-                    id: "create-user",
+                    id: "create-plane",
                     style: "btn btn-outline btn-success",
                     html: `${Icons.plusCircle}<span class="pl-1">Añadir Avión</span>`,
                     callBack: async () => {
-                        if (
-                        Helpers.expresiones.numeros.test(document.getElementById('executive').value) &&
-                        Helpers.expresiones.other.test(document.getElementById('modelo').value) &&
-                        Helpers.expresiones.numeros.test(document.getElementById('economic').value) &&
+                        if (Helpers.expresiones.other.test(document.getElementById('modelo').value) &&
                         Helpers.expresiones.other.test(document.getElementById('matricula').value)) {
                             try {
                                 let response = await Helpers.fetchData(`${localStorage.getItem("url")}/aviones`,
@@ -209,31 +207,34 @@ export default class Aviones {
                                             "ejecutivas": document.getElementById('executive').value,
                                             "economicas": document.getElementById('economic').value
                                         })
-                                        Helpers.showToast({
-                                            icon: `${Icons.check}`,
+                                        Toast.info({
                                             message: "Avión añadido exitosamente!",
+                                            mode: "success"
                                         })
                                     } else {
-                                        Helpers.showToast({
-                                            icon: `${Icons.alert}`,
+                                        Toast.info({
                                             message: `${response2.message}`,
+                                            mode: "info"
                                         })
                                     }
-                                    modalAddPlane.dispose()
+                                    this.#modal.dispose()
                                 } else {
-                                    Helpers.showToast({
-                                        icon: `${Icons.alert}`,
+                                    Toast.info({
                                         message: `${response.message}`,
+                                        mode: "error"
                                     })
                                 }
                             } catch (error) {
-                                console.log(error);
+                                Toast.info({
+                                    message: 'Sin acceso a creación de aviones',
+                                    mode: "info"
+                                })
                             }
                         } else {
-                            Helpers.showToast({
-                                icon: `${Icons.alert}`,
+                            Toast.info({
                                 message: 'Rellena los espacios correctamente!',
-                            }) 
+                                mode: "warning"
+                            })
                         }
                     }
                 }
@@ -242,8 +243,8 @@ export default class Aviones {
     }
     static #delete = (e, cell) => {
         e.preventDefault();
-        let info = cell.getRow().getData()
-        let modal = new Modal({
+        const info = cell.getRow().getData()
+        this.#modal = new Modal({
             title: "Eliminar Avión",
             content: `
                 <div class="p-8">
@@ -261,24 +262,24 @@ export default class Aviones {
                             if (response1.message == 'ok') {
                                 let response2 = await Helpers.fetchData(`${localStorage.getItem("url")}/aviones/${info.matricula}`, { method: 'DELETE' })
                                 if (response2.message == 'ok') {
-                                    Helpers.showToast({
-                                        icon: `${Icons.check}`,
+                                    Toast.info({
                                         message: 'Avión eliminado exitosamente!',
+                                        mode: "success"
                                     })
                                     cell.getRow().delete();
                                 } else {
-                                    Helpers.showToast({
-                                        icon: `${Icons.alert}`,
+                                    Toast.info({
                                         message: `Sillas eliminadas pero ${response2.message}`,
+                                        mode: "warning"
                                     })
                                 }
                             } else {
-                                Helpers.showToast({
-                                    icon: `${Icons.alert}`,
-                                    message: `${response1.message}`,
+                                Toast.info({
+                                    message: `El ${info.matricula} existe en vuelos!`,
+                                    mode: "error"
                                 })
                             }
-                            modal.dispose()
+                            this.#modal.dispose()
                         } catch (e) {
                             console.log(e);
                         }                        
@@ -287,7 +288,7 @@ export default class Aviones {
                     id: "cancelar",
                     style: "btn btn-outline btn-error",
                     html: `${Icons.cancel}<span class="pl-1">No</span>`,
-                    callBack: () => modal.dispose()
+                    callBack: () => this.#modal.dispose()
                 }
             ]
         }).show()

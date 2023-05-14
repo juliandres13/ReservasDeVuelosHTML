@@ -1,0 +1,35 @@
+<html>
+    <body>
+        <form class="grid gap-5">
+            <div class="grid gap-5 media-600:grid-cols-2">
+                <div class="inline-grid w-full mb-3">
+                    <label class="mb-2 font-semibold" for="name">Nombres</label>
+                    <input type="text" id="name" class="bg-white border-gray-300 p-2 focus:border-blue-800 border-solid outline-none transition-all duration-500 border-2 rounded-md" placeholder="Nombres">
+                </div>
+                <div class="inline-grid w-full mb-3">
+                    <label class="mb-2 font-semibold" for="surname">Apellidos</label>
+                    <input type="text" id="surname" class="bg-white border-gray-300 border-2 rounded-md p-2 focus:border-blue-800 border-solid outline-none transition-all duration-500" placeholder="Apellidos">
+                </div>    
+            </div>
+            <div class="grid-cols-1 inline-grid w-full mb-3">
+                <label class="mb-2 font-semibold" for="id">ID Usuario</label>
+                <input type="text" id="id-user" class="bg-white border-gray-300 border-2 rounded-md p-2 focus:border-blue-800 border-solid outline-none transition-all duration-500" placeholder="ID de Usuario">
+            </div>
+            <div class="grid gap-5 media-600:grid-cols-2">
+                <div class="inline-grid w-full mb-3">
+                    <label class="mb-2 font-semibold" for="profile">Perfil</label>
+                    <select class="w-full rounded-md h-11 border-2 border-solid border-gray-300 p-2 bg-white text-black outline-none transition-all duration-500 focus:border-blue-800"
+                        id="type-user">
+                        <option>PASAJERO</option>
+                        <option>ADMINISTRADOR</option>
+                        <option>AUXILIAR</option>
+                    </select>
+                </div>
+                <div class="inline-grid w-full mb-3">
+                    <label class="mb-2 font-semibold" for="id">Contraseña</label>
+                    <input type="password" id="password" class="bg-white border-gray-300 p-2 focus:border-blue-800 outline-none border-solid transition-all duration-500 border-2 rounded-md" placeholder="Contraseña">
+                </div>
+            </div>
+        </form>
+    </body>
+</html>

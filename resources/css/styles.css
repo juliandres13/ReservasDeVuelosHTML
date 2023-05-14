@@ -1154,105 +1154,6 @@ body.tabulator-print-fullscreen-hide>:not(.tabulator-print-fullscreen){
   background:#333
 }
 
-#toast {
-  visibility: hidden;
-  max-width: -moz-fit-content;
-  max-width: fit-content;
-  height: 50px;
-  margin: auto;
-  background-color: gray;
-  color: #fff;
-  text-align: center;
-  border-radius: 15px;
-  position: fixed;
-  z-index: 50;
-  left: 0;
-  right: 0;
-  bottom: 5vh;
-  font-size: 17px;
-  white-space: nowrap;
-  border: 1px solid black;
-}
-
-#toast #img {
-  border-bottom-left-radius: 15px;
-  border-top-left-radius: 15px;
-  width: 50px;
-  height: 50px;
-  float: left;
-  padding: 10px 0 0 10px;
-  box-sizing: border-box;
-  align-items: start;
-  background-color: #111;
-  color: #fff;
-}
-
-#toast #desc {
-  color: #fff;
-  padding: 15px;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-#toast.show {
-  visibility: visible;
-  animation: fadein 0.5s, expand 0.5s 0.5s, stay 3s 1s, shrink 0.5s 4s, fadeout 0.5s 4.5s;
-}
-
-@keyframes fadein {
-  from {
-    bottom: 0;
-    opacity: 0;
-  }
-
-  to {
-    bottom: 30px;
-    opacity: 1;
-  }
-}
-
-@keyframes expand {
-  from {
-    min-width: 50px;
-  }
-
-  to {
-    min-width: 350px;
-  }
-}
-
-@keyframes stay {
-  from {
-    min-width: 350px;
-  }
-
-  to {
-    min-width: 350px;
-  }
-}
-
-@keyframes shrink {
-  from {
-    min-width: 350px;
-  }
-
-  to {
-    min-width: 50px;
-  }
-}
-
-@keyframes fadeout {
-  from {
-    bottom: 30px;
-    opacity: 1;
-  }
-
-  to {
-    bottom: 60px;
-    opacity: 0;
-  }
-}
-
 /*
 ! tailwindcss v3.3.2 | MIT License | https://tailwindcss.com
 */
@@ -3274,6 +3175,10 @@ h6 {
   text-decoration-line:underline
 }
 
+.menu > :where(li.disabled > *:not(ul):focus){
+  cursor:auto
+}
+
 .modal{
   pointer-events:none;
   visibility:hidden;
@@ -3423,6 +3328,27 @@ h6 {
   border-radius:var(--rounded-badge, 1.9rem);
   transition:background, box-shadow var(--animation-input, 0.2s) ease-in-out;
   box-shadow:var(--handleoffsetcalculator) 0 0 2px var(--tglbg) inset, 0 0 0 2px var(--tglbg) inset, var(--togglehandleborder)
+}
+
+.alert-info{
+  --tw-bg-opacity:1;
+  background-color:hsl(var(--in) / var(--tw-bg-opacity));
+  --tw-text-opacity:1;
+  color:hsl(var(--inc, var(--nc)) / var(--tw-text-opacity))
+}
+
+.alert-success{
+  --tw-bg-opacity:1;
+  background-color:hsl(var(--su) / var(--tw-bg-opacity));
+  --tw-text-opacity:1;
+  color:hsl(var(--suc, var(--nc)) / var(--tw-text-opacity))
+}
+
+.alert-warning{
+  --tw-bg-opacity:1;
+  background-color:hsl(var(--wa) / var(--tw-bg-opacity));
+  --tw-text-opacity:1;
+  color:hsl(var(--wac, var(--nc)) / var(--tw-text-opacity))
 }
 
 .alert-error{
@@ -3596,6 +3522,18 @@ h6 {
   background-color:hsl(var(--af, var(--a)) / var(--tw-bg-opacity));
   --tw-text-opacity:1;
   color:hsl(var(--ac) / var(--tw-text-opacity))
+}
+
+.btm-nav>*.disabled,
+    .btm-nav>*.disabled:hover,
+    .btm-nav>*[disabled],
+    .btm-nav>*[disabled]:hover{
+  pointer-events:none;
+  --tw-border-opacity:0;
+  background-color:hsl(var(--n) / var(--tw-bg-opacity));
+  --tw-bg-opacity:0.1;
+  color:hsl(var(--bc) / var(--tw-text-opacity));
+  --tw-text-opacity:0.2
 }
 
 .btm-nav>* .label{
@@ -4028,6 +3966,18 @@ h6 {
   outline-offset:2px
 }
 
+.menu li.disabled > *{
+  -webkit-user-select:none;
+     -moz-user-select:none;
+          user-select:none;
+  color:hsl(var(--bc) / var(--tw-text-opacity));
+  --tw-text-opacity:0.2
+}
+
+.menu li.disabled > *:hover{
+  background-color:transparent
+}
+
 .mockup-phone .display{
   overflow:hidden;
   border-radius:40px;
@@ -4260,6 +4210,21 @@ h6 {
 
 [dir="rtl"] .toggle:indeterminate{
   box-shadow:calc(var(--handleoffset) / 2) 0 0 2px var(--tglbg) inset, calc(var(--handleoffset) / -2) 0 0 2px var(--tglbg) inset, 0 0 0 2px var(--tglbg) inset
+}
+
+.toggle-success:focus-visible{
+  outline:2px solid hsl(var(--su))
+}
+
+.toggle-success:checked,
+    .toggle-success[checked="true"],
+    .toggle-success[aria-checked=true]{
+  border-color:hsl(var(--su) / var(--tw-border-opacity));
+  --tw-border-opacity:0.1;
+  --tw-bg-opacity:1;
+  background-color:hsl(var(--su) / var(--tw-bg-opacity));
+  --tw-text-opacity:1;
+  color:hsl(var(--suc, var(--nc)) / var(--tw-text-opacity))
 }
 
 .toggle:disabled{
@@ -4737,6 +4702,10 @@ main > section{
   bottom:1rem
 }
 
+.bottom-\[5vh\]{
+  bottom:5vh
+}
+
 .right-2{
   right:0.5rem
 }
@@ -4753,6 +4722,10 @@ main > section{
   z-index:40
 }
 
+.z-50{
+  z-index:50
+}
+
 .float-right{
   float:right
 }
@@ -4765,6 +4738,11 @@ main > section{
 .mx-1{
   margin-left:0.25rem;
   margin-right:0.25rem
+}
+
+.mx-10{
+  margin-left:2.5rem;
+  margin-right:2.5rem
 }
 
 .mx-4{
@@ -4841,6 +4819,10 @@ main > section{
   margin-left:auto
 }
 
+.mr-3{
+  margin-right:0.75rem
+}
+
 .mt-2{
   margin-top:0.5rem
 }
@@ -4897,6 +4879,10 @@ main > section{
   height:1.5rem
 }
 
+.h-7{
+  height:1.75rem
+}
+
 .h-fit{
   height:-moz-fit-content;
   height:fit-content
@@ -4926,8 +4912,17 @@ main > section{
   width:1.5rem
 }
 
+.w-7{
+  width:1.75rem
+}
+
 .w-7\/12{
   width:58.333333%
+}
+
+.w-fit{
+  width:-moz-fit-content;
+  width:fit-content
 }
 
 .w-full{
@@ -4966,10 +4961,6 @@ main > section{
 
 .grid-cols-1{
   grid-template-columns:repeat(1, minmax(0, 1fr))
-}
-
-.grid-cols-2{
-  grid-template-columns:repeat(2, minmax(0, 1fr))
 }
 
 .flex-row{
@@ -5100,8 +5091,9 @@ main > section{
   border-color:rgb(220 38 38 / var(--tw-border-opacity))
 }
 
-.border-opacity-50{
-  --tw-border-opacity:0.5
+.bg-\[\#BAD7E9\]{
+  --tw-bg-opacity:1;
+  background-color:rgb(186 215 233 / var(--tw-bg-opacity))
 }
 
 .bg-base-100{
@@ -5169,10 +5161,6 @@ main > section{
 
 .bg-opacity-100{
   --tw-bg-opacity:1
-}
-
-.bg-opacity-20{
-  --tw-bg-opacity:0.2
 }
 
 .bg-opacity-50{
@@ -5281,21 +5269,12 @@ main > section{
   padding-bottom:1.5rem
 }
 
-.py-8{
-  padding-top:2rem;
-  padding-bottom:2rem
-}
-
 .pb-2{
   padding-bottom:0.5rem
 }
 
 .pb-2\.5{
   padding-bottom:0.625rem
-}
-
-.pb-5{
-  padding-bottom:1.25rem
 }
 
 .pb-6{
@@ -5656,12 +5635,12 @@ main > section{
     grid-template-columns:repeat(3, minmax(0, 1fr))
   }
 
-  .media-600\:grid-cols-5{
-    grid-template-columns:repeat(5, minmax(0, 1fr))
+  .media-600\:grid-cols-4{
+    grid-template-columns:repeat(4, minmax(0, 1fr))
   }
 
-  .media-600\:grid-rows-3{
-    grid-template-rows:repeat(3, minmax(0, 1fr))
+  .media-600\:grid-cols-5{
+    grid-template-columns:repeat(5, minmax(0, 1fr))
   }
 
   .media-600\:text-2xl{
@@ -5720,14 +5699,6 @@ main > section{
     grid-template-columns:repeat(4, minmax(0, 1fr))
   }
 
-  .media-1080\:grid-cols-6{
-    grid-template-columns:repeat(6, minmax(0, 1fr))
-  }
-
-  .media-1080\:grid-rows-1{
-    grid-template-rows:repeat(1, minmax(0, 1fr))
-  }
-
   .media-1080\:flex-row{
     flex-direction:row
   }
@@ -5755,11 +5726,6 @@ main > section{
 
   .media-1080\:pt-24{
     padding-top:6rem
-  }
-
-  .media-1080\:text-2xl{
-    font-size:1.5rem;
-    line-height:2rem
   }
 
   .media-1080\:text-3xl{

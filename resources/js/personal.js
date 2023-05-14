@@ -1,7 +1,7 @@
 'use strict';
-
 export default class Personal {
     static #table
+    static #modal
     
     static async init() {
         
@@ -40,10 +40,10 @@ export default class Personal {
     
     static #formEditPersonal = (e, cell) => {
         e.preventDefault()
-        let formEditPersonal = new Modal({
+        this.#modal = new Modal({
             title: "Edición de Usuarios",
             content: `
-                <form class="grid gap-5 grid-cols-2">
+                <form class="grid gap-5 media-600:grid-cols-2">
                     <div class="inline-grid w-full mb-3">
                         <label class="mb-2 font-semibold" for="name">Nombres</label>
                         <input type="text" id="name" class="bg-white border-gray-300 p-2 focus:border-blue-800 border-solid outline-none transition-all duration-500 border-2 rounded-md" placeholder="Nombres" value="${cell.getRow().getData().nombres}">
@@ -90,10 +90,9 @@ export default class Personal {
                                         }
                                     })
                                     if (JSON.parse(JSON.stringify(response)).message == 'ok') {
-                                        console.log(JSON.parse(JSON.stringify(response)).data);
-                                        Helpers.showToast({
-                                            icon: `${Icons.check}`,
+                                        Toast.info({
                                             message: 'Usuario modificado exitosamente!',
+                                            mode: "success"
                                         })
                                         cell.getRow().update({
                                             "nombres": document.getElementById('name').value,
@@ -101,109 +100,84 @@ export default class Personal {
                                             "perfil": document.getElementById('type-user').value
                                         })
                                     } else {
-                                        Helpers.showToast({
-                                            icon: `${Icons.alert}`,
-                                            message: 'No se puede actualizar el usuario!',
+                                        Toast.info({
+                                            message: `${response.message}`,
+                                            mode: "error"
                                         })
                                     }
-                                    formEditPersonal.dispose()
+                                    this.#modal.dispose()
                                 } catch (e) {
                                     console.log(e);
                                 }
                         } else {
-                            Helpers.showToast({
-                                icon: `${Icons.alert}`,
+                            Toast.info({
                                 message: 'Rellena los espacios correctamente!',
-                            }) 
+                                mode: "warning"
+                            })
                         }   
                     }
                 }
             ]
         }).show()        
     }
-    static #addPersonal = () => {
+    static #addPersonal = async () => {
 
-        let addPersonal = new Modal({
+        this.#modal = new Modal({
             title: "Agregar Usuarios",
-            content: `
-            <form class="grid gap-5">
-                <div class="grid gap-5 grid-cols-2">
-                    <div class="inline-grid w-full mb-3">
-                        <label class="mb-2 font-semibold" for="name">Nombres</label>
-                        <input type="text" id="name" class="bg-white border-gray-300 p-2 focus:border-blue-800 border-solid outline-none transition-all duration-500 border-2 rounded-md" placeholder="Nombres">
-                    </div>
-                    <div class="inline-grid w-full mb-3">
-                        <label class="mb-2 font-semibold" for="surname">Apellidos</label>
-                        <input type="text" id="surname" class="bg-white border-gray-300 border-2 rounded-md p-2 focus:border-blue-800 border-solid outline-none transition-all duration-500" placeholder="Apellidos">
-                    </div>    
-                </div>
-                <div class="grid-cols-1 inline-grid w-full mb-3">
-                    <label class="mb-2 font-semibold" for="id">ID Usuario</label>
-                    <input type="text" id="id-user" class="bg-white border-gray-300 border-2 rounded-md p-2 focus:border-blue-800 border-solid outline-none transition-all duration-500" placeholder="ID de Usuario">
-                </div>
-                <div class="grid gap-5 grid-cols-2">
-                    <div class="inline-grid w-full mb-3">
-                        <label class="mb-2 font-semibold" for="profile">Perfil</label>
-                        <select class="w-full rounded-md h-11 border-2 border-solid border-gray-300 p-2 bg-white text-black outline-none transition-all duration-500 focus:border-blue-800"
-                            id="type-user">
-                            <option>PASAJERO</option>
-                            <option>ADMINISTRADOR</option>
-                            <option>AUXILIAR</option>
-                        </select>
-                    </div>
-                    <div class="inline-grid w-full mb-3">
-                        <label class="mb-2 font-semibold" for="id">Contraseña</label>
-                        <input type="password" id="password" class="bg-white border-gray-300 p-2 focus:border-blue-800 outline-none border-solid transition-all duration-500 border-2 rounded-md" placeholder="Contraseña">
-                    </div>
-                </div>
-            </form>
-            `,
+            content: `${await Helpers.loadPage('./resources/html/form-add-personal.html')}`,
             buttons: [
                 {
                     id: "create-user",
                     style: "btn btn-outline btn-success",
                     html: `${Icons.addPerson}<span class="pl-1">Crear Usuario</span>`,
                     callBack: async () => {
-                        if (Helpers.expresiones.nombre.test(document.getElementById('name').value) &&
-                        Helpers.expresiones.nombre.test(document.getElementById('surname').value) &&
-                        Helpers.expresiones.password.test(document.getElementById('password').value)) {
+                        const dataForm = {
+                            name: document.getElementById('name').value,
+                            surname: document.getElementById('surname').value,
+                            password: document.getElementById('password').value,
+                            id: document.getElementById('id-user').value,
+                            profile: document.getElementById('type-user').value
+                        }
+                        if (Helpers.expresiones.nombre.test(dataForm.name) &&
+                        Helpers.expresiones.nombre.test(dataForm.surname) &&
+                        Helpers.expresiones.password.test(dataForm.password)) {
                             try {
                                 let response = await Helpers.fetchData(`${localStorage.getItem("url")}/usuarios`, {
                                     method: 'POST',
                                     body: {
-                                        identificacion: document.getElementById('id-user').value,
-                                        nombres : document.getElementById('name').value,
-                                        apellidos : document.getElementById('surname').value,
-                                        perfil : document.getElementById('type-user').value,
-                                        password: document.getElementById('password').value
+                                        identificacion: dataForm.id,
+                                        nombres : dataForm.name,
+                                        apellidos : dataForm.surname,
+                                        perfil : dataForm.profile,
+                                        password: dataForm.password
                                     }
                                 })
                                 if (response.message == 'ok') {
-                                    Helpers.showToast({
-                                        icon: `${Icons.check}`,
+                                    Toast.info({
                                         message: 'Usuario creado correctamente!',
+                                        mode: "success"
                                     })
                                     this.#table.addRow({
-                                        identificacion: document.getElementById('id-user').value,
-                                        nombres: document.getElementById('name').value,
-                                        apellidos: document.getElementById('surname').value,
-                                        perfil: document.getElementById('type-user').value
+                                        identificacion: dataForm.id,
+                                        nombres: dataForm.name,
+                                        apellidos: dataForm.surname,
+                                        perfil: dataForm.profile
                                     }, true);
-                                    addPersonal.dispose()
+                                    this.#modal.dispose()
                                 } else {
-                                    Helpers.showToast({
-                                        icon: `${Icons.alert}`,
-                                        message: `El usuario ${document.getElementById('id-user').value} ya existe!`,
-                                    }) 
+                                    Toast.info({
+                                        message: `${response.message}`,
+                                        mode: "error"
+                                    })
                                 }
                             } catch (e) {
                                 console.log(e);
                             } 
                         } else {
-                            Helpers.showToast({
-                                icon: `${Icons.alert}`,
+                            Toast.info({
                                 message: 'Rellena los espacios correctamente!',
-                            }) 
+                                mode: "warning"
+                            })
                         }                           
                     }
                 }
@@ -213,7 +187,7 @@ export default class Personal {
     static #delete = (e, cell) => {
         e.preventDefault();
         const info = cell.getRow().getData()
-        let modal = new Modal({
+        this.#modal = new Modal({
             title: "Eliminar Usuario",
             content: `
                 <div class="p-8">
@@ -229,18 +203,18 @@ export default class Personal {
                         try {
                             let user = await Helpers.fetchData(`${localStorage.getItem("url")}/usuarios/${info.identificacion}`, { method: 'DELETE' })
                             if (JSON.parse(JSON.stringify(user)).message == 'ok') {
-                                Helpers.showToast({
-                                    icon: `${Icons.check}`,
+                                Toast.info({
                                     message: 'Usuario eliminado exitosamente!',
+                                    mode: "success"
                                 })
                                 cell.getRow().delete();
                             } else {
-                                Helpers.showToast({
-                                    icon: `${Icons.alert}`,
-                                    message: 'No se pudo eliminar el usuario!',
+                                Toast.info({
+                                    message: `${user.message}`,
+                                    mode: "error"
                                 })
                             }
-                            modal.dispose()
+                            this.#modal.dispose()
                         } catch (e) {
                             console.log(e);
                         }                        
@@ -249,7 +223,7 @@ export default class Personal {
                     id: "cancelar",
                     style: "btn btn-outline btn-error",
                     html: `${Icons.cancel}<span class="pl-1">No</span>`,
-                    callBack: () => modal.dispose()
+                    callBack: () => this.#modal.dispose()
                 }
             ]
         }).show()

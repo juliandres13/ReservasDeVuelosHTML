@@ -1,6 +1,7 @@
 'use strict';
 export default class Trayectos {
     static #table
+    static #modal
     
     static async init() {
         document.querySelector('#tablas').innerHTML = `
@@ -45,7 +46,7 @@ export default class Trayectos {
     static #deleteRowButton = () => `<button class="text-red-600" title="Eliminar">${Icons.delete}</button>`
 
     static async #addTrayecto() {
-        let modalAddTrayecto = new Modal({
+        this.#modal = new Modal({
             title: "Añadir Trayecto",
             content: `${await Helpers.loadPage('./resources/html/form-create-trayectos.html')}`,
             buttons: [
@@ -68,31 +69,31 @@ export default class Trayectos {
                                     }
                                 })
                                 if (response.message == 'ok') {
-                                    Helpers.showToast({
-                                        icon: `${Icons.check}`,
+                                    Toast.info({
                                         message: "Trayecto añadido exitosamente!",
-                                    }) 
+                                        mode: "success"
+                                    })
                                     Trayectos.#table.addRow({
                                         origen: document.getElementById('origen').value,
                                         destino: document.getElementById('destino').value,
                                         costo: document.getElementById('costo').value,
                                         duracion: Duration.fromObject(Duration.fromISOTime(document.getElementById('duracion').value).toObject()).toISO()
                                     }, true);
-                                    modalAddTrayecto.dispose()
+                                    this.#modal.dispose()
                                 } else {
-                                    Helpers.showToast({
-                                        icon: `${Icons.alert}`,
+                                    Toast.info({
                                         message: `${response.message}`,
-                                    }) 
+                                        mode: "error"
+                                    })
                                 }
                             } catch (error) {
                                 console.log(error);
                             }
                         } else {
-                            Helpers.showToast({
-                                icon: `${Icons.alert}`,
+                            Toast.info({
                                 message: 'Rellena los espacios correctamente!',
-                            }) 
+                                mode: "warning"
+                            })
                         }
                     }
                 }
@@ -101,7 +102,7 @@ export default class Trayectos {
     }
     static #deleteTrayecto = (e, cell) => {
         const info = cell.getRow().getData()
-        let modalDeleteTrayecto = new Modal({
+        this.#modal = new Modal({
             title: "Eliminar Trayecto",
             content: `
             <div class="p-8">
@@ -116,18 +117,18 @@ export default class Trayectos {
                         try {
                             let response = await Helpers.fetchData(`${localStorage.getItem('url')}/trayectos/origen=${info.origen}&destino=${info.destino}`, { method: 'DELETE' })
                             if (response.message == 'ok') {
-                                Helpers.showToast({
-                                    icon: `${Icons.check}`,
+                                Toast.info({
                                     message: "Trayecto eliminado exitosamente!",
+                                    mode: "success"
                                 })
                                 cell.getRow().delete()
-                                modalDeleteTrayecto.dispose()
                             } else {
-                                Helpers.showToast({
-                                    icon: `${Icons.alert}`,
-                                    message: `${response.message}`
+                                Toast.info({
+                                    message: `${response.message}`,
+                                    mode: "error"
                                 })
                             }
+                            this.#modal.dispose()
                         } catch (error) {
                             console.log(error);
                         }
@@ -138,7 +139,7 @@ export default class Trayectos {
     }
     static #updateTrayecto = (e, cell) => {
         const info = cell.getRow().getData()
-        let modalUpdateTrayecto = new Modal({
+        this.#modal = new Modal({
             title: "Editar Trayecto",
             content: `
             <form class="w-full mx-auto grid gap-5">
@@ -181,29 +182,29 @@ export default class Trayectos {
                                     }
                                 })
                                 if (response.message == 'ok') {
-                                    Helpers.showToast({
-                                        icon: `${Icons.check}`,
+                                    Toast.info({
                                         message: 'Trayecto actualizado exitosamente!',
+                                        mode: "success"
                                     })
                                     cell.getRow().update({
                                         "costo": document.getElementById('costo').value,
                                         "duracion": Duration.fromObject(Duration.fromISOTime(document.getElementById('duracion').value).toObject()).toISO()
                                     })
                                 } else {
-                                    Helpers.showToast({
-                                        icon: `${Icons.alert}`,
-                                        message: `${response.message}!`
-                                    }) 
+                                    Toast.info({
+                                        message: `${response.message}!`,
+                                        mode: "enter"
+                                    })
                                 }
-                                modalUpdateTrayecto.dispose()
+                                this.#modal.dispose()
                             } catch (error) {
                                 console.log(error);
                             }
                         } else {
-                            Helpers.showToast({
-                                icon: `${Icons.alert}`,
+                            Toast.info({
                                 message: 'Rellena los espacios correctamente!',
-                            }) 
+                                mode: "warning"
+                            })
                         }
                     }
                 }
