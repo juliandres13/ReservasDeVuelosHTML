@@ -140,7 +140,7 @@ export default class Aviones {
             ]
         }).show()
     }
-    static #createPlane = () => {
+    static #createPlane = async () => {
         this.#modal = new Modal({
             title: "Añadir Avión",
             content: `

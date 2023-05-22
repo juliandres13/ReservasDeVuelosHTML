@@ -57,8 +57,8 @@ export default class Toast {
         const zIndex = "z-50"
 
         const html = `
-            <div class="alert ${color} bottom-[5vh] mx-10 fixed shadow-lg w-fit ${zIndex} shadow-black" id="${id}">
-                <div>
+            <div class="alert ${color} fixed right-5 bottom-[5vh] mx-auto max-w-fit shadow-lg w-full ${zIndex} shadow-black" id="${id}">
+                <div class="ease-in-out">
                     ${icon}
                     <span class="font-bold">${title}</span>
                     <span class="font-semibold">${message}</span>

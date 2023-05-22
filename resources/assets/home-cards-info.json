@@ -1,0 +1,75 @@
+[
+    {
+        "image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/d2/42/b2/caption.jpg?w=500&h=400&s=1",
+        "title": "Tailandia",
+        "content": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non modi ab suscipit voluptate quibusdam, mollitia ipsum.",
+        "price": "COP 2,000,000"
+    },
+    {
+        "image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1d/88/db/45/caption.jpg?w=500&h=400&s=1",
+        "title": "Río de Janeiro",
+        "content": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non modi ab suscipit voluptate quibusdam, mollitia ipsum.",
+        "price": "COP 900,000"
+    },
+    {
+        "image": "https://cdn5.travelconline.com/unsafe/fit-in/2000x0/filters:quality(75):format(webp)/https%3A%2F%2Ftravelc.azureedge.net%2Fimagenes%2Fnorthamerica%2Fwashintondc%2Fwashintondc%2Fpict1.jpg",
+        "title": "Washington DC",
+        "content": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non modi ab suscipit voluptate quibusdam, mollitia ipsum.",
+        "price": "COP 4,000,000"
+    },
+    {
+        "image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/22/91/d3/df/caption.jpg?w=500&h=400&s=1",
+        "title": "Chicago",
+        "content": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non modi ab suscipit voluptate quibusdam, mollitia ipsum.",
+        "price": "COP 5,000,000"
+    },
+    {
+        "image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/28/0a/a9/03/caption.jpg?w=500&h=400&s=1",
+        "title": "Tokio",
+        "content": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non modi ab suscipit voluptate quibusdam, mollitia ipsum.",
+        "price": "COP 6,000,000"
+    },
+    {
+        "image": "https://static.travelconline.com/imagenes/europe/russia/moscow/pict7.jpg",
+        "title": "Moscú",
+        "content": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non modi ab suscipit voluptate quibusdam, mollitia ipsum.",
+        "price": "COP 4,458,000"
+    },
+    {
+        "image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1d/8e/72/2b/caption.jpg?w=500&h=400&s=1",
+        "title": "Barcelona",
+        "content": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non modi ab suscipit voluptate quibusdam, mollitia ipsum.",
+        "price": "COP 3,500,000"
+    },
+    {
+        "image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/10/e8/8d/27/turm.jpg?w=500&h=400&s=1",
+        "title": "Berlín",
+        "content": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non modi ab suscipit voluptate quibusdam, mollitia ipsum.",
+        "price": "COP 5,500,000"
+    },
+    {
+        "image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/28/0a/a9/03/caption.jpg?w=500&h=400&s=1",
+        "title": "Tokio",
+        "content": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non modi ab suscipit voluptate quibusdam, mollitia ipsum.",
+        "price": "COP 6,000,000"
+    },
+    {
+        "image": "https://static.travelconline.com/imagenes/europe/russia/moscow/pict7.jpg",
+        "title": "Moscú",
+        "content": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non modi ab suscipit voluptate quibusdam, mollitia ipsum.",
+        "price": "COP 4,458,000"
+    },
+    {
+        "image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1d/88/db/45/caption.jpg?w=500&h=400&s=1",
+        "title": "Río de Janeiro",
+        "content": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non modi ab suscipit voluptate quibusdam, mollitia ipsum.",
+        "price": "COP 900,000"
+    },
+    {
+        "image": "https://cdn5.travelconline.com/unsafe/fit-in/2000x0/filters:quality(75):format(webp)/https%3A%2F%2Ftravelc.azureedge.net%2Fimagenes%2Fnorthamerica%2Fwashintondc%2Fwashintondc%2Fpict1.jpg",
+        "title": "Washington DC",
+        "content": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non modi ab suscipit voluptate quibusdam, mollitia ipsum.",
+        "price": "COP 4,000,000"
+    }
+
+]

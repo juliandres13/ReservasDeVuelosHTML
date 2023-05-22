@@ -1,5 +1,6 @@
-'use strict';
+
 export default class Trayectos {
+
     static #table
     static #modal
     
@@ -45,7 +46,7 @@ export default class Trayectos {
     static #editRowButton = () => `<button class="text-green-600" title="Editar">${Icons.edit}</button>`
     static #deleteRowButton = () => `<button class="text-red-600" title="Eliminar">${Icons.delete}</button>`
 
-    static async #addTrayecto() {
+    static #addTrayecto = async () => {
         this.#modal = new Modal({
             title: "Añadir Trayecto",
             content: `${await Helpers.loadPage('./resources/html/form-create-trayectos.html')}`,
@@ -73,7 +74,7 @@ export default class Trayectos {
                                         message: "Trayecto añadido exitosamente!",
                                         mode: "success"
                                     })
-                                    Trayectos.#table.addRow({
+                                    this.#table.addRow({
                                         origen: document.getElementById('origen').value,
                                         destino: document.getElementById('destino').value,
                                         costo: document.getElementById('costo').value,

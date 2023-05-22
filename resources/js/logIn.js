@@ -101,7 +101,10 @@ export default class InicioSesion {
                     })
                 }
             } catch (e) {
-                console.log(e);
+                Toast.info({
+                    message: 'Sin acceso a inicio de sesión!',
+                    mode: "info"
+                })
             }
         } else {
             Helpers.showError()

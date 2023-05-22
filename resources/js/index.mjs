@@ -4,8 +4,9 @@ import { DateTime, Duration } from "../../node_modules/luxon/build/es6/luxon.js"
 import { TabulatorFull as Tabulator } from '../../node_modules/tabulator-tables/dist/js/tabulator_esm.min.js';
 import Helpers from "./helpers.js";
 import Modal from "./modal.js";
-import icons from "./icons.js";
+import Icons from "./icons.js";
 import Toast from "./toast.js";
+import CardMasonry from "./cardMasonry.js";
 
 export default (async () => init())()
 
@@ -18,14 +19,15 @@ async function init() {
     window.Helpers = Helpers
     window.Tabulator = Tabulator
     window.Modal = Modal
-    window.Icons = icons
+    window.Icons = Icons
     window.Toast = Toast
+    window.CardMasonry = CardMasonry
 
     const config = await Helpers.fetchData("./resources/assets/config.json")
     localStorage.setItem("url", config.url)
 
     Helpers.scrollNav()
-    
+
     if (localStorage.getItem("user") != null) {
         user = JSON.parse(localStorage.getItem("user"))
         Helpers.loadUserPage({ data: { user } }, init)
@@ -77,7 +79,7 @@ async function main() {
 
     const loginIcons = document.querySelector('.icons')
     const navBarToggle = document.querySelector('#bars')
-    const listOptions = document.querySelectorAll('.search, .destinations, .help, .sign-up, .log-in-js')
+    const listOptions = document.querySelectorAll('.search, .destinations, .help, .sign-up, .log-in-js, #a-log')
 
     navBarToggle.addEventListener('click', () => {
         loginIcons.classList.toggle('flex')
@@ -97,7 +99,7 @@ async function main() {
  */
 async function mainMenu(option) {
     if (option == 'log-in-js' || option == 'sign-up') {
-        
+
         let logInModal = new Modal({
             title: "Acceso / Registro",
             buttons: [{
@@ -112,10 +114,10 @@ async function mainMenu(option) {
             e.preventDefault();
             logInModal.dispose()
         })
-        
+
         const { default: InicioSesion } = await import(`./logIn.js`)
         new InicioSesion(option, logInModal, init)
-        
+
     } else {
         switch (option) {
             case 'search':
@@ -123,12 +125,30 @@ async function mainMenu(option) {
                 break;
             case 'destinations':
                 Helpers.toggle('#title-index', '#p-index')
+                document.querySelector('main').innerHTML = ``
                 await Helpers.loadPage('./resources/html/destinations.html', 'main');
+                const masonry = new CardMasonry({
+                    infoCards: await Helpers.fetchData('./resources/assets/home-cards-info.json'),
+                    container: "#cards",
+                    buttons: [
+                        {
+                            id: "do-something",
+                            style: "btn btn-sm normal-case w-1/2 bg-orange-2 text-black hover:bg-black hover:text-white transition-all duration-500",
+                            html: `<span>Ver más</span>`,
+                        }
+                    ]
+                })
                 break;
             case 'help':
                 Helpers.toggle('#title-index', '#p-index')
                 await Helpers.loadPage("./resources/html/help.html", 'main')
                 break;
+            case 'logo':
+                init()
+                break;
+            default:
+                document.querySelector('header').classList.add('h-screen')
+                init()
         }
     }
 }
