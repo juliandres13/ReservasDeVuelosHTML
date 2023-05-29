@@ -204,7 +204,7 @@ DELETE http://localhost:4567/sillas/avion/HK6060
 GET http://localhost:4567/vuelos
 
 ### buscar un vuelo
-GET http://localhost:4567/vuelos/fechaHora=2022-09-12T22:19:25.151863&origen=Manizales&destino=Medellín&avion=HK2005
+GET http://localhost:4567/vuelos/fechaHora=2023-05-30T17:25&origen=Cali&destino=Bucaramanga&avion=HK2015
 
 ### buscar vuelos a partir de una Fecha con un ORigen y un DEStino determinado
 GET http://localhost:4567/vuelos/select/fechaHora=2022-01-01T00:00&origen=Manizales&destino=Medellín
@@ -252,15 +252,15 @@ DELETE http://localhost:4567/vuelos/fechaHora=2022-09-12T22:19:25.151863&origen=
 GET http://localhost:4567/reservas
 
 ### Buscar una reserva
-GET http://localhost:4567/reservas/fechaHora=2022-09-15T06:33:35.449360&usuario=P0001
+GET http://localhost:4567/reservas/fechaHora=2023-05-28T20:12&usuario=P0001
 
 ### agregar una reserva
 POST http://localhost:4567/reservas
 Content-Type: application/json
 
 {
-    "fechaHora": "2023-04-30T06:30",
-    "usuario": "P0001"
+    "fechaHora": "2023-05-05T21:23",
+    "usuario": "P1234"
 }
 
 ### agregar una reserva
@@ -287,13 +287,13 @@ PUT http://localhost:4567/reservas
 Content-Type: application/json
 
 {
-    "fechaHora": "2023-04-30T20:25",
-    "usuario": "P0009",
+    "fechaHora": "2023-04-30T06:30",
+    "usuario": "P0001",
     "cancelada": true
 }
 
 ### eliminar una reserva
-DELETE http://localhost:4567/reservas/fechaHora=2023-04-30T06:50:35.449360&usuario=P1234
+DELETE http://localhost:4567/reservas/fechaHora=2023-05-28T21:12&usuario=P0010
 
 // -------------------- VUELOS DE RESERVAS ----------------------
 
@@ -304,21 +304,21 @@ GET http://localhost:4567/vuelos-reservas
 GET http://localhost:4567/vuelos-reservas/fechaHoraReserva=2022-09-16T12:34:55.097274&usuario=P0202&fechaHoraVuelo=2022-09-12T22:19:25.151863&origen=Manizales&destino=Medellín&avion=HK2005&fila=10&columna=C
 
 ### Listar las sillas disponibles de un vuelo
-GET http://localhost:4567/vuelos-reservas/libres/fechaHora=2022-09-12T22:19:25.151863&origen=Manizales&destino=Medellín&avion=HK2005
+GET http://localhost:4567/vuelos-reservas/libres/fechaHora=2023-05-05T21:23&origen=Manizales&destino=Medellín&avion=HK2005
 
 ### agregar un vuelo a una reserva con silla ejecutiva
 POST http://localhost:4567/vuelos-reservas
 Content-Type: application/json
 
 {
-    "fechaHoraReserva": "2022-10-27T06:33:35.449360",
-    "usuario": "P0007",
-    "fechaHoraVuelo": "2022-09-13T07:03:46.501220",
-    "origen": "Bucaramanga",
-    "destino": "Cali",
-    "avion": "HK3005",
-    "fila": 2,
-    "columna": "D",
+    "fechaHoraReserva": "2023-05-05T21:23",
+    "usuario": "P1234",
+    "fechaHoraVuelo": "2023-05-05T21:23",
+    "origen": "Manizales",
+    "destino": "Medellín",
+    "avion": "HK2005",
+    "fila": 1,
+    "columna": "A",
     "menu": "FILETE_DE_PESCADO",
     "licor": "OPORTO"
 }

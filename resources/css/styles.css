@@ -5098,6 +5098,10 @@ main > section{
   border-top-right-radius:0.5rem
 }
 
+.border{
+  border-width:1px
+}
+
 .border-0{
   border-width:0px
 }

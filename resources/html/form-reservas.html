@@ -1,0 +1,47 @@
+<html>
+    <body>
+        <form class="w-full mx-auto grid gap-5">
+            <div class="grid gap-5">
+                <div class="grid media-600:grid-cols-2 gap-5">
+                    <div class="mb-2">
+                        <label class="block text-gray-700 font-bold mb-2" for="date-time">
+                            Fecha y Hora de la Reserva
+                        </label>
+                        <input
+                            class="appearance-none border-2 rounded w-full py-2 px-3 text-gray-700 leading-tight outline-none focus:border-blue-800 transition-all duration-500"
+                            id="date-time" type="datetime-local" value="$1" disabled>
+                    </div>
+                    <div class="mb-2">
+                        <label class="block text-gray-700 font-bold mb-2" for="pasajero">
+                            Pasajero
+                        </label>
+                        <select
+                            class="w-full rounded-md h-11 border-2 border-solid border-gray-300 p-2 bg-white text-black outline-none transition-all duration-500 focus:border-blue-800"
+                            id="usuario">
+                            $0
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <label class="block text-gray-700 font-bold mb-2" for="flights">
+                        Vuelo
+                    </label>
+                    <select
+                        class="w-full rounded-md h-11 border-2 border-solid border-gray-300 p-2 bg-white text-black outline-none transition-all duration-500 focus:border-blue-800"
+                        id="flights">
+                        $2
+                    </select>
+                </div>
+                <div class="mb-2">
+                    <label class="block text-gray-700 font-bold mb-2" for="chair-position">
+                        Posición y Ubicación de la Silla
+                    </label>
+                    <select
+                        class="w-full rounded-md h-11 border-2 border-solid border-gray-300 p-2 bg-white text-black outline-none transition-all duration-500 focus:border-blue-800"
+                        id="chair-position">
+                    </select>
+                </div>
+            </div>
+        </form>
+    </body>
+</html>

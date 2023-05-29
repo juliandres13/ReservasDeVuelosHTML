@@ -76,7 +76,6 @@ export default class InicioSesion {
     async #signUp(form) {
         if (Helpers.campos.name && Helpers.campos.surname && Helpers.campos.user && Helpers.campos.password === true) {         
             try {
-                
                 let response = await Helpers.fetchData(`${localStorage.getItem("url")}/usuarios`, {
                     method: 'POST',
                     body: {

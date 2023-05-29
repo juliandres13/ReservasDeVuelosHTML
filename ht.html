@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fecha y Hora Actual con Luxon</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/2.0.1/luxon.min.js"></script>
+  <script>
+    // Función para obtener el valor seleccionado del select
+    function obtenerValorSeleccionado() {
+      var selectElement = document.getElementById("mySelect");
+      var selectedValue = selectElement.value;
+
+      // Mostrar el valor seleccionado en un elemento HTML
+      document.getElementById("valorSeleccionado").innerHTML = "Valor seleccionado: " + selectedValue;
+    }
+    // Función para obtener la fecha y hora actual con Luxon
+    function obtenerFechaHoraActual() {
+      var fechaHora = luxon.DateTime.local();
+      var fecha = fechaHora.toFormat('yyyy-MM-dd');
+      var hora = fechaHora.toFormat('HH:mm:ss');
+
+      // Mostrar la fecha y hora actual en un elemento HTML
+      document.getElementById("fechaHoraActual").innerHTML = "Fecha: " + fecha + "<br>Hora: " + hora;
+    }
+  </script>
+</head>
+<body onload="obtenerFechaHoraActual()">
+  <h1>Fecha y Hora Actual con Luxon</h1>
+  <div id="fechaHoraActual"></div>
+  <h1>Obtener valor seleccionado de un select</h1>
+  <select id="mySelect">
+    <option value="opcion1">Opción 1</option>
+    <option value="opcion2">Opción 2</option>
+    <option value="opcion3">Opción 3</option>
+  </select>
+  <br>
+  <button onclick="obtenerValorSeleccionado()">Obtener valor seleccionado</button>
+  <br>
+  <div id="valorSeleccionado"></div>
+</body>
+</html>

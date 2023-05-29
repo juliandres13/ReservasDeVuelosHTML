@@ -38,7 +38,7 @@ export default class Modal {
         this.#modal = document.querySelector(`#${this.#id}`)
 
         if (typeof callBack === "function") {
-          callBack(this.#id)
+            callBack(this.#id)
         }
     }
 
@@ -98,8 +98,8 @@ export default class Modal {
     }
 
     close() {
-        this.#modal.classList.add("hidden")
-        return this
+        this.#modal.parentNode.removeChild(this.#modal)
+        this.#modal = null
     }
 
     dispose() {

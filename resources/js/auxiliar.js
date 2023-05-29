@@ -137,8 +137,8 @@ export default class Auxiliar {
                 Trayectos.init()
                 break;
             case 'Reservas':
-                const { default: Reservas } = await import(`./reservas.js`)
-                new Reservas()
+                const { default: VuelosDeReservas } = await import(`./reservas.js`)
+                await VuelosDeReservas.init()
                 break;
             case 'Crear':
                 console.log("carga");

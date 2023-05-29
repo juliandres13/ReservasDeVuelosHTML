@@ -105,8 +105,8 @@ export default class Administrador {
                 await Vuelos.init()
                 break;
             case 'Reservas':
-                const { default: Reservas } = await import(`./reservas.js`)
-                new Reservas()
+                const { default: VuelosDeReservas } = await import(`./reservas.js`)
+                await VuelosDeReservas.init()
                 break;
             case 'Personal':
                 const { default: Personal } = await import(`./personal.js`)
